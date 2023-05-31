@@ -1,0 +1,414 @@
+/* Tags */
+body {
+    background-color: black;
+}
+
+div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 1.5vh auto 1.5vh auto;
+    /* outline: 2px dashed blue; */
+} 
+
+/* Classes */
+.nextButtons {
+    width: 10vmax;
+    margin: 5vh 2vw;
+    background-color: mediumspringgreen;
+    color: black;
+    font-size: 1.5vmax;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    border: 0;
+    padding: 1.5vmax;
+    font-family: europa, Arial, Helvetica, sans-serif;
+    text-align: center;
+    font-weight: bolder;
+    cursor: pointer;
+    user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+  }
+
+  .nextButtons:hover {
+    background-color: #0dff92;
+    animation: glowy-box 0.5s infinite alternate;
+  }
+
+  .backButtons {
+    width: 10vmax;
+    margin: 5vh 2vw;
+    background-color: mediumspringgreen;
+    color: black;
+    font-size: 1.5vmax;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    border: 0;
+    padding: 1.5vmax;
+    font-family: europa, Arial, Helvetica, sans-serif;
+    text-align: center;
+    font-weight: bolder;
+    cursor: pointer;
+    user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+  }
+
+  .backButtons:hover {
+    background-color: #0dff92;
+    animation: glowy-box 0.5s infinite alternate;
+  }
+
+  @keyframes glowy-box {
+    from {
+      box-shadow: 0vmin 0vmin 1.3vmin white;
+    }
+    to {
+      box-shadow: 0vmin 0vmin 2vmin white;
+    }
+  }
+
+  .acknowledgementButtons {
+    width: 30vmax;
+    margin: 5vh 2vw;
+    background-color: mediumspringgreen;
+    color: black;
+    font-size: 1.5vmax;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    border: 0;
+    padding: 1.5vmax;
+    font-family: europa, Arial, Helvetica, sans-serif;
+    text-align: center;
+    font-weight: bolder;
+    cursor: pointer;
+    user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+  }
+
+  .acknowledgementButtons:hover {
+    background-color: #0dff92;
+    animation: glowy-box 0.5s infinite alternate;
+  }
+
+.textBoxes {
+    width: 30vw;
+    height: 5vh;
+}
+
+.textIntro {
+    color: white;
+    text-align: center;
+    font-size: 2.3vmax;
+    font-weight: 650;
+    margin: 3vh auto 3vh auto;
+    padding: 3vh auto 3vh auto; 
+    line-height: 3vmax;
+}
+
+.textIntroNoMargin {
+  color: white;
+  text-align: center;
+  font-size: 2.5vmax;
+  font-weight: 650;
+  margin: 0;
+  padding: 1vmax; 
+  line-height: 1.5vmax;
+}
+
+.textInstructions {
+  color: white;
+  text-align: center;
+  font-size: 1.6vmax;
+  font-weight: 550;
+  margin: 3vh auto 3vh auto;
+  padding: 3vh auto 3vh auto; 
+  line-height: 2em;
+}
+
+.divButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: 4vh auto 4vh auto;
+  padding: 3vmax;
+}
+
+.flashText {
+  color: white;
+  text-align: center;
+  font-size: 2.5vmax;
+  font-weight: 650;
+  margin: 3vh auto 3vh auto;
+  padding: 3vh auto 3vh auto; 
+  line-height: 1.5vmax;
+  animation: blinker 2s linear infinite;
+}
+
+.flashTextNoMargin {
+  color: white;
+  text-align: center;
+  font-size: 2.5vmax;
+  font-weight: 650;
+  margin: 0;
+  padding: 0; 
+  line-height: 1.5vmax;
+  animation: blinker 1.3s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+
+.individualWords {
+  color: mediumspringgreen;
+}
+
+.individualWordsGreen {
+  color: Green;
+}
+
+.individualWordsRed {
+  color: Crimson;
+}
+
+.individualWordsGold {
+  color: Gold;
+}
+
+.individualWordsOrange {
+  color: orangered;
+}
+
+/* IDs */
+#sectionVeryTop {
+  position: absolute;
+  top: 0%;
+  bottom: 80%;
+  left: 0%;
+  right: 0%;
+}
+
+#sectionTop {
+  position: absolute;
+  top: 20%;
+  bottom: 60%;
+  left: 0%;
+  right: 0%;
+}
+
+#sectionMiddle {
+  position: absolute;
+  top: 40%;
+  bottom: 40%;
+  left: 0%;
+  right: 0%;
+}
+
+#sectionBottom {
+  position: absolute;
+  top: 60%;
+  bottom: 20%;
+  left: 0%;
+  right: 0%;
+}
+
+#sectionVeryBottom {
+  position: absolute;
+  top: 80%;
+  bottom: 0%;
+  left: 0%;
+  right: 0%;
+}
+
+#welcomeMessage {
+  position: absolute;
+}
+
+#loadingGif {
+  position: absolute;
+  margin: 3vh auto 3vh auto;
+}
+
+#imgGroupMembership {
+    margin: auto;
+}
+
+#prolificIDPrompt {
+  position: absolute;
+}
+
+#textBoxProlificID {
+  position: absolute;
+}
+
+#buttonSection {
+  position: absolute;
+}
+
+#groupMembershipPrompt {
+  position: absolute;
+}
+
+#imageGroupMembership {
+  position: absolute;
+}
+
+#title {
+  position: absolute;
+}
+
+#informationPart1 {
+  position: absolute;
+}
+
+#informationPart2 {
+  position: absolute;
+}
+
+#joiningMessage {
+  position: absolute;
+}
+
+#loadingGifWaitRoom {
+  position: absolute;
+}
+
+#message {
+  position: absolute;
+}
+
+#message2 {
+  position: absolute;
+}
+
+#startingGame {
+  position: absolute;
+}
+
+#timerStartingGame {
+  position: absolute;
+}
+
+#playfield {
+  position: absolute;
+  outline: 5px solid Maroon;
+}
+
+#cardChoiceIngroupReactions {
+  position: absolute;
+}
+
+#gameOutcome {
+  position: absolute;
+}
+
+#emotionalReactionsPrompt {
+  position: absolute;
+}
+
+#emotionalReactions {
+  position: absolute;
+}
+
+#cardChoiceMessage {
+  position: absolute;
+}
+
+#cardSelection {
+  position: absolute;
+}
+
+#goodbyeMessage {
+  position: absolute;
+}
+
+#exitingFlash {
+  position: absolute;
+}
+
+#loadingGifEnd {
+  position: absolute;
+}
+
+#break {
+  position: absolute;
+}
+
+#newPlayers {
+  position: absolute;
+}
+
+#timerTestPhase {
+  position: absolute;
+}
+
+#buttonTestPhase {
+  position: absolute;
+}
+
+#titleTestPhase {
+  position: absolute;
+}
+
+#informationTestPhasePart1{
+  position: absolute;
+}
+
+#informationTestPhasePart2{
+  position: absolute;
+}
+
+#buttonSectionTestPhase {
+  position: absolute;
+}
+
+/* Containers for ingroup and outgroup players */
+#ingroupPlayers {
+  position: absolute;
+  left: 0%;
+  right:0%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: auto 6vmax auto 6vmax;
+}
+
+#outgroupPlayers {
+  position: absolute;
+  left: 0%;
+  right:0%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: auto 6vmax auto 6vmax;
+}
+
+/* Container for the emoji scale */
+/* #emojiReactions {
+  position: absolute;
+  left: 0%;
+  right:0%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: auto 2vmax auto 2vmax;
+} */
