@@ -106,14 +106,6 @@ $(document).ready(function(){
     var emoji1 = new Image();
     var emoji2 = new Image();
     var emoji3 = new Image();
-    var emoji4 = new Image();
-    var emoji5 = new Image();
-    var emoji6 = new Image();
-    var emoji7 = new Image();
-    var emoji8 = new Image();
-    var emoji9 = new Image();
-    var emoji10 = new Image();
-    var emoji11 = new Image();
 
     // EMOJI REACTIONS
     var tigerReactionDisplays;
@@ -173,14 +165,6 @@ $(document).ready(function(){
         "valence1": 1,
         "valence2": 2,
         "valence3": 3,
-        "valence4": 4,
-        "valence5": 5,
-        "valence6": 6,
-        "valence7": 7,
-        "valence8": 8,
-        "valence9": 9,
-        "valence10": 10,
-        "valence11": 11
     };
 
     // Dictionary mapping emoji image src to values
@@ -188,14 +172,6 @@ $(document).ready(function(){
         "assets/Valence1.png": 1,
         "assets/Valence2.png": 2,
         "assets/Valence3.png": 3,
-        "assets/Valence4.png": 4,
-        "assets/Valence5.png": 5,
-        "assets/Valence6.png": 6,
-        "assets/Valence7.png": 7,
-        "assets/Valence8.png": 8,
-        "assets/Valence9.png": 9,
-        "assets/Valence10.png": 10,
-        "assets/Valence11.png": 11
     };
 
     ////////// NEW INFORMATION //////////
@@ -230,9 +206,15 @@ $(document).ready(function(){
     var startTimeCardChoice;
     var clickTimeCardChoice; 
  
-    // Emotional reaction reaction time - Time it takes for the participant to select an emoji
-    var startTimeEmojiChoice;
-    var clickTimeEmojiChoice; 
+    // Emotional reaction reaction time - Time it takes for the participant to select an emoji (Own response)
+    var startTimeEmojiChoiceSelf;
+    var clickTimeEmojiChoiceSelf; 
+
+    // Emotional reaction reaction time - Time it takes for the participant to select an emoji (Prediction for Lions & Tigers)
+    var startTimeEmojiChoiceLions;
+    var clickTimeEmojiChoiceLions; 
+    var startTimeEmojiChoiceTigers;
+    var clickTimeEmojiChoiceTigers; 
 
     // Timestamp needed to calculate duration
     var startTask = Date.now();
@@ -249,7 +231,6 @@ $(document).ready(function(){
     var typedProlificID;  // Updated later
 
     // Experimental condition [ATTENTION: CHANGE ACCORDINGLY]
-    // var currentExperimentalCondition = jsPsych.randomization.sampleWithoutReplacement(['inEmp_outEmp', 'inApa_outEmp', 'inEmp_outApa', 'inApa_outApa'], 1)[0];
     var currentExperimentalCondition = "inApa_outApa";
 
     // Participant's group membership [ATTENTION: CHANGE ACCORDINGLY]
@@ -319,11 +300,13 @@ $(document).ready(function(){
         last11LionDisplays = lionReactionDisplaysShuffled.slice(-11);
     }
 
+    // As long as the last 11 elements are the same, shuffle tigerReactionDisplays
     while (last11TigerDisplays.every( (val, i, arr) => val === arr[0] )) {
         tigerReactionDisplaysShuffled = shuffle(tigerReactionDisplays);
         last11TigerDisplays = tigerReactionDisplaysShuffled.slice(-11);
     }
 
+    // As long as the last 11 elements are the same, shuffle lionReactionDisplays
     while (last11LionDisplays.every( (val, i, arr) => val === arr[0] )) {
         lionReactionDisplaysShuffled = shuffle(lionReactionDisplays);
         last11LionDisplays = lionReactionDisplaysShuffled.slice(-11);
@@ -418,12 +401,20 @@ $(document).ready(function(){
     var specificParticipantSelectedCardRT;
 
     // Arrays storing participant's emotional reactions
-    var participantReactionsPublic = []; // Which emoji did the participant choose?
-    var participantReactionsPublicRT = []; // How long did it take the participant to choose this emoji?
+    var participantReactionsPublic = []; // Which emoji did the participant choose? (Own response)
+    var participantReactionsPublicRT = []; // How long did it take the participant to choose this emoji? (Own response)
+    var participantReactionsPublicLions = []; // Which emoji did the participant think Lions would choose? (Prediction for Lions)
+    var participantReactionsPublicLionsRT = []; // How long did it take the participant to make their prediction? (Prediction for Lions)
+    var participantReactionsPublicTigers = []; // Which emoji did the participant think Tigers would choose? (Prediction for Tigers)
+    var participantReactionsPublicTigersRT = []; // How long did it take the participant to make their prediction? (Prediction for Tigers)
 
     // Specific variables that will be dynamically updated and used in functions
     var specificParticipantReaction;
     var specificParticipantReactionRT;
+    var specificParticipantReactionLions;
+    var specificParticipantReactionLionsRT;
+    var specificParticipantReactionTigers;
+    var specificParticipantReactionTigersRT;
 
     // Arrays storing information about other players and their reactions
     var tigerPlayersDisplayed = []; // Which tiger player was displayed on each trial?
@@ -474,7 +465,7 @@ $(document).ready(function(){
     dataELT.condition = condition;
 
     ////////// INITIATE EXPERIMENT //////////
-    prolificIDPage();
+    prolificIDPage(); // [CONTINUE HERE ON 01/06/2023]
 
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -4988,22 +4979,6 @@ $(document).ready(function(){
             emoji2.id = "valence2";
             emoji3.src = "assets/Valence3.png";
             emoji3.id = "valence3";
-            emoji4.src = "assets/Valence4.png";
-            emoji4.id = "valence4";
-            emoji5.src = "assets/Valence5.png";
-            emoji5.id = "valence5";
-            emoji6.src = "assets/Valence6.png";
-            emoji6.id = "valence6";
-            emoji7.src = "assets/Valence7.png";
-            emoji7.id = "valence7";
-            emoji8.src = "assets/Valence8.png";
-            emoji8.id = "valence8";
-            emoji9.src = "assets/Valence9.png";
-            emoji9.id = "valence9";
-            emoji10.src = "assets/Valence10.png";
-            emoji10.id = "valence10";
-            emoji11.src = "assets/Valence11.png";
-            emoji11.id = "valence11";
 
             // Participants' cards
             pinkCard.src = "assets/pinkCard.png";
