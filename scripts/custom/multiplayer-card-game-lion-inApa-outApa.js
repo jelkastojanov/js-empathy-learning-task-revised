@@ -966,22 +966,22 @@ $(document).ready(function(){
         var starting = '<p class = "flashTextNoMargin"> Starting the game... </p>';
         $('#startingGame').html(starting);
 
-        // Timer
-        var countdownTime3s = new Date().getTime() + 2000; 
+        // Timer 
+        var countdownTime2s = new Date().getTime() + 2000; 
 
         var x = setInterval(function() {
 
-            var nowTime3s = new Date().getTime();
-            var timeDistance3s = countdownTime3s - nowTime3s;
+            var nowTime2s = new Date().getTime();
+            var timeDistance2s = countdownTime2s - nowTime2s;
     
-            var minutes0 = Math.floor((timeDistance3s % (1000 * 60 * 60)) / (1000 * 60));
-            var seconds3 = Math.floor((timeDistance3s % (1000 * 60)) / 1000);
+            var minutes0 = Math.floor((timeDistance2s % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds2 = Math.floor((timeDistance2s % (1000 * 60)) / 1000);
 
-            var timer3s = '<p class = "textIntroNoMargin">' + minutes0 + 'm ' + seconds3 + 's </p>' 
+            var timer2s = '<p class = "textIntroNoMargin">' + minutes0 + 'm ' + seconds2 + 's </p>' 
 
-            $('#timerStartingGame').html(timer3s);
+            $('#timerStartingGame').html(timer2s);
 
-            if (timeDistance3s < 300) {
+            if (timeDistance2s < 300) {
                 clearInterval(x);
                 $('#startingGame').fadeOut(400);
                 $('#timerStartingGame').fadeOut(400);
@@ -1025,7 +1025,7 @@ $(document).ready(function(){
             var localDateEndLearningBlock = new Date(localTimeEndLearningBlock).toString();
 
             // UTC time
-            var utcDateEndLearningBlock = new Date().toUTCString();
+            var utcDateEndLearningBlock = new Date(localTimeEndLearningBlock).toUTCString();
 
             // Duration of the learning block
             endLearningBlock = Date.now();
@@ -1269,14 +1269,14 @@ $(document).ready(function(){
         CreateDiv('sectionMiddle', 'emotionalReactionsPrompt');
         CreateDiv('sectionBottom', 'emotionalReactions');
 
-        var emojiReaction = "<p class = 'textInstructions' id = 'emojiPrompt'>How bad/good do you feel because of this player's outcome?</p>";
+        var emojiReaction = "<p class = 'textInstructions' id = 'emojiPrompt'>How do you feel because of this player's outcome?</p>";
 
         $('#emotionalReactionsPrompt').html(emojiReaction);
         $('#emotionalReactionsPrompt').show();
         
         // Display emojis (Defined in the beginning)
         // Note: .show() needs to be included so that you can display the emoji scale on multiple trials without it being deleted by .fadeOut()        
-        emojiImagesSize = calculateAspectRatioFit(527, 508, midDiv.clientWidth / 12, midDiv.clientHeight);
+        emojiImagesSize = calculateAspectRatioFit(527, 508, midDiv.clientWidth / 3, midDiv.clientHeight);
 
         emojiImages = document.createElement("div");
         emojiImages.id = "emojiReactions";
@@ -1290,42 +1290,15 @@ $(document).ready(function(){
 
         emoji3.width = emojiImagesSize.width;
         emoji3.height = emojiImagesSize.height;
-
-        emoji4.width = emojiImagesSize.width;
-        emoji4.height = emojiImagesSize.height;
-
-        emoji5.width = emojiImagesSize.width;
-        emoji5.height = emojiImagesSize.height;
-
-        emoji6.width = emojiImagesSize.width;
-        emoji6.height = emojiImagesSize.height;
-
-        emoji7.width = emojiImagesSize.width;
-        emoji7.height = emojiImagesSize.height;
-        
-        emoji8.width = emojiImagesSize.width;
-        emoji8.height = emojiImagesSize.height;
-
-        emoji9.width = emojiImagesSize.width;
-        emoji9.height = emojiImagesSize.height;
-
-        emoji10.width = emojiImagesSize.width;
-        emoji10.height = emojiImagesSize.height;
-
-        emoji11.width = emojiImagesSize.width;
-        emoji11.height = emojiImagesSize.height;
   
-        emojiImages.appendChild(emoji1);
-        emojiImages.appendChild(emoji2);
-        emojiImages.appendChild(emoji3);
-        emojiImages.appendChild(emoji4);
-        emojiImages.appendChild(emoji5);
-        emojiImages.appendChild(emoji6);
-        emojiImages.appendChild(emoji7);
-        emojiImages.appendChild(emoji8);
-        emojiImages.appendChild(emoji9);
-        emojiImages.appendChild(emoji10);
-        emojiImages.appendChild(emoji11);
+        // Determine which two emojis will be presented as options depending on the outcome
+        if (specificTrialOutcome == "Victory") {
+            emojiImages.appendChild(emoji2);
+            emojiImages.appendChild(emoji3);
+        } else if (specificTrialOutcome == "Loss") {
+            emojiImages.appendChild(emoji1);
+            emojiImages.appendChild(emoji2);
+        };
 
         $('#emotionalReactions').html(emojiImages);
         $('#emotionalReactions').show();
@@ -1391,174 +1364,6 @@ $(document).ready(function(){
                 $('#emotionalReactions').empty();
                 $('#gameOutcome').fadeOut(500);
                 specificParticipantReaction = image_id_map["valence3"];
-                participantReactionsPublic.push(specificParticipantReaction);
-                participantReactionsPublicRT.push(specificParticipantReactionRT);
-                setTimeout(function() {
-                    undimScreen();
-                    displayDelay.push(waitTimeDisplay);
-                    $('#sectionTop').empty();
-                    $('#sectionMiddle').empty();
-                    $('#sectionBottom').empty();
-                    outcomeReactionDisplay(currentGroupMembership, activePlayer, specificTrialOutcome, trialNum);
-                }, waitTimeDisplay);
-            };
-        }); 
-
-        $('#valence4').click(function() {
-            if(!event.detail || event.detail == 1){
-                clickTimeEmojiChoice = new Date().getTime();
-                specificParticipantReactionRT = calculateRT(startTimeEmojiChoice, clickTimeEmojiChoice);
-                $('#emotionalReactionsPrompt').empty();
-                $('#emotionalReactions').empty();
-                $('#gameOutcome').fadeOut(500);
-                specificParticipantReaction = image_id_map["valence4"];
-                participantReactionsPublic.push(specificParticipantReaction);
-                participantReactionsPublicRT.push(specificParticipantReactionRT);
-                setTimeout(function() {
-                    undimScreen();
-                    displayDelay.push(waitTimeDisplay);
-                    $('#sectionTop').empty();
-                    $('#sectionMiddle').empty();
-                    $('#sectionBottom').empty();
-                    outcomeReactionDisplay(currentGroupMembership, activePlayer, specificTrialOutcome, trialNum);
-                }, waitTimeDisplay);
-            };
-        }); 
-
-        $('#valence5').click(function() {
-            if(!event.detail || event.detail == 1){
-                clickTimeEmojiChoice = new Date().getTime();
-                specificParticipantReactionRT = calculateRT(startTimeEmojiChoice, clickTimeEmojiChoice);
-                $('#emotionalReactionsPrompt').empty();
-                $('#emotionalReactions').empty();
-                $('#gameOutcome').fadeOut(500);
-                specificParticipantReaction = image_id_map["valence5"];
-                participantReactionsPublic.push(specificParticipantReaction);
-                participantReactionsPublicRT.push(specificParticipantReactionRT);
-                setTimeout(function() {
-                    undimScreen();
-                    displayDelay.push(waitTimeDisplay);
-                    $('#sectionTop').empty();
-                    $('#sectionMiddle').empty();
-                    $('#sectionBottom').empty();
-                    outcomeReactionDisplay(currentGroupMembership, activePlayer, specificTrialOutcome, trialNum);
-                }, waitTimeDisplay);
-            };
-        }); 
-
-        $('#valence6').click(function() {
-            if(!event.detail || event.detail == 1){
-                clickTimeEmojiChoice = new Date().getTime();
-                specificParticipantReactionRT = calculateRT(startTimeEmojiChoice, clickTimeEmojiChoice);
-                $('#emotionalReactionsPrompt').empty();
-                $('#emotionalReactions').empty();
-                $('#gameOutcome').fadeOut(500);
-                specificParticipantReaction = image_id_map["valence6"];
-                participantReactionsPublic.push(specificParticipantReaction);
-                participantReactionsPublicRT.push(specificParticipantReactionRT);
-                setTimeout(function() {
-                    undimScreen();
-                    displayDelay.push(waitTimeDisplay);
-                    $('#sectionTop').empty();
-                    $('#sectionMiddle').empty();
-                    $('#sectionBottom').empty();
-                    outcomeReactionDisplay(currentGroupMembership, activePlayer, specificTrialOutcome, trialNum);
-                }, waitTimeDisplay);
-            };
-        }); 
-
-        $('#valence7').click(function() {
-            if(!event.detail || event.detail == 1){
-                clickTimeEmojiChoice = new Date().getTime();
-                specificParticipantReactionRT = calculateRT(startTimeEmojiChoice, clickTimeEmojiChoice);
-                $('#emotionalReactionsPrompt').empty();
-                $('#emotionalReactions').empty();
-                $('#gameOutcome').fadeOut(500);
-                specificParticipantReaction = image_id_map["valence7"];
-                participantReactionsPublic.push(specificParticipantReaction);
-                participantReactionsPublicRT.push(specificParticipantReactionRT);
-                setTimeout(function() {
-                    undimScreen();
-                    displayDelay.push(waitTimeDisplay);
-                    $('#sectionTop').empty();
-                    $('#sectionMiddle').empty();
-                    $('#sectionBottom').empty();
-                    outcomeReactionDisplay(currentGroupMembership, activePlayer, specificTrialOutcome, trialNum);
-                }, waitTimeDisplay);
-            };
-        }); 
-
-        $('#valence8').click(function() {
-            if(!event.detail || event.detail == 1){
-                clickTimeEmojiChoice = new Date().getTime();
-                specificParticipantReactionRT = calculateRT(startTimeEmojiChoice, clickTimeEmojiChoice);
-                $('#emotionalReactionsPrompt').empty();
-                $('#emotionalReactions').empty();
-                $('#gameOutcome').fadeOut(500);
-                specificParticipantReaction = image_id_map["valence8"];
-                participantReactionsPublic.push(specificParticipantReaction);
-                participantReactionsPublicRT.push(specificParticipantReactionRT);
-                setTimeout(function() {
-                    undimScreen();
-                    displayDelay.push(waitTimeDisplay);
-                    $('#sectionTop').empty();
-                    $('#sectionMiddle').empty();
-                    $('#sectionBottom').empty();
-                    outcomeReactionDisplay(currentGroupMembership, activePlayer, specificTrialOutcome, trialNum);
-                }, waitTimeDisplay);
-            };
-        }); 
-
-        $('#valence9').click(function() {
-            if(!event.detail || event.detail == 1){
-                clickTimeEmojiChoice = new Date().getTime();
-                specificParticipantReactionRT = calculateRT(startTimeEmojiChoice, clickTimeEmojiChoice);
-                $('#emotionalReactionsPrompt').empty();
-                $('#emotionalReactions').empty();
-                $('#gameOutcome').fadeOut(500);
-                specificParticipantReaction = image_id_map["valence9"];
-                participantReactionsPublic.push(specificParticipantReaction);
-                participantReactionsPublicRT.push(specificParticipantReactionRT);
-                setTimeout(function() {
-                    undimScreen();
-                    displayDelay.push(waitTimeDisplay);
-                    $('#sectionTop').empty();
-                    $('#sectionMiddle').empty();
-                    $('#sectionBottom').empty();
-                    outcomeReactionDisplay(currentGroupMembership, activePlayer, specificTrialOutcome, trialNum);
-                }, waitTimeDisplay);
-            };
-        }); 
-
-        $('#valence10').click(function() {
-            if(!event.detail || event.detail == 1){
-                clickTimeEmojiChoice = new Date().getTime();
-                specificParticipantReactionRT = calculateRT(startTimeEmojiChoice, clickTimeEmojiChoice);
-                $('#emotionalReactionsPrompt').empty();
-                $('#emotionalReactions').empty();
-                $('#gameOutcome').fadeOut(500);
-                specificParticipantReaction = image_id_map["valence10"];
-                participantReactionsPublic.push(specificParticipantReaction);
-                participantReactionsPublicRT.push(specificParticipantReactionRT);
-                setTimeout(function() {
-                    undimScreen();
-                    displayDelay.push(waitTimeDisplay);
-                    $('#sectionTop').empty();
-                    $('#sectionMiddle').empty();
-                    $('#sectionBottom').empty();
-                    outcomeReactionDisplay(currentGroupMembership, activePlayer, specificTrialOutcome, trialNum);
-                }, waitTimeDisplay);
-            };
-        }); 
-
-        $('#valence11').click(function() {
-            if(!event.detail || event.detail == 1){
-                clickTimeEmojiChoice = new Date().getTime();
-                specificParticipantReactionRT = calculateRT(startTimeEmojiChoice, clickTimeEmojiChoice);
-                $('#emotionalReactionsPrompt').empty();
-                $('#emotionalReactions').empty();
-                $('#gameOutcome').fadeOut(500);
-                specificParticipantReaction = image_id_map["valence11"];
                 participantReactionsPublic.push(specificParticipantReaction);
                 participantReactionsPublicRT.push(specificParticipantReactionRT);
                 setTimeout(function() {
