@@ -501,6 +501,7 @@ $(document).ready(function(){
         nextButton.id = "toGroup";
         $('#buttonSection').html(nextButton);
        
+        // Do not allow participants to continue until they have given a response and until their response has 24 characters
         $('#toGroup').click(function() {
             if(!event.detail || event.detail == 1){
                 typedProlificID = document.getElementById("prolificIDTextBox").value;
@@ -544,7 +545,7 @@ $(document).ready(function(){
         var groupPrompt = '<p class = "textInstructions"> You were assigned to the <span class = "individualWordsGold"> Lions</span>. <br> Please acknowledge your group membership before proceeding.</p>'
         $('#groupMembershipPrompt').html(groupPrompt);
 
-        // Group image
+        // Recalculate the size of the group image so that it fits the space you have available
         groupImageSize = calculateAspectRatioFit(821, 821, midDiv.clientWidth, midDiv.clientHeight);
         imageGroup.width = groupImageSize.width;
         imageGroup.height = groupImageSize.height;
@@ -665,7 +666,7 @@ $(document).ready(function(){
         // Hide irrelevant buttons
         if (pageNum === 0) {
             $('#backInstructions').hide();
-            };
+        };
 
         if (pageNum === numPages) {
             $('#nextInstructions').hide();
@@ -706,7 +707,7 @@ $(document).ready(function(){
                 CreateDiv('sectionTop', 'joiningMessage');
                 CreateDiv('sectionMiddle', 'loadingGifWaitRoom');
         
-                // Joining messgae
+                // Joining message
                 var join = '<p class = "flashText"> Joining the waiting room... </p>';
 
                 // Loading gif
@@ -877,6 +878,7 @@ $(document).ready(function(){
         var countdownTime = new Date().getTime() + 24000; 
 
         // The function below will execute each second
+        // At pre-specified points, different events will be happening on the screen (e.g., players appearing)
         var x = setInterval(function() {
 
             var nowTime = new Date().getTime();
@@ -939,7 +941,7 @@ $(document).ready(function(){
         startButton.className = "nextButtons";
         startButton.id = "toGame";
 
-        // Once the button is clicked
+        // Once the button is clicked, move onto the first round of the game
         $(document).on('click','#toGame', function(){
             $('#sectionTop').empty();
             $('#sectionMiddle').empty();
