@@ -465,7 +465,7 @@ $(document).ready(function(){
     dataELT.condition = condition;
 
     ////////// INITIATE EXPERIMENT //////////
-    prolificIDPage(); // [CONTINUE HERE ON 01/06/2023]
+    prolificIDPage(); 
 
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////
