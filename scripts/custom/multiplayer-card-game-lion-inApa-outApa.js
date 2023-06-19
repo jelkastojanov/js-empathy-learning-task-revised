@@ -152,6 +152,7 @@ $(document).ready(function(){
     var randResponseOrder; // Save the outcome to this variable
     var randResponseOrderSave; // Save the array (i.e., dataELT column) to this variable
 
+    // For whom do participants make predictions first?
     if (randResponseOrderNum < 0.50) {
         randResponseOrder = "Ingroup first"
         randResponseOrderSave = [].concat(... new Array(84).fill("Ingroup first"));
@@ -193,8 +194,8 @@ $(document).ready(function(){
     var entries;
 
     // Number of trials in the experiment
-    const numTrials = 63; // Learning phase [ATTENTION: CHANGE ACCORDINGLY]
-    const numTrialsTP = 21; // Test phase [ATTENTION: CHANGE ACCORDINGLY]
+    const numTrials = 1; // Learning phase [ATTENTION: CHANGE ACCORDINGLY]
+    const numTrialsTP = 10; // Test phase [ATTENTION: CHANGE ACCORDINGLY]
 
     // Timestamps when the empathy learning task started
 
@@ -3051,7 +3052,7 @@ $(document).ready(function(){
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 
     // INTRO TO TEST PHASE
-    // NOTHING TO SAVE
+    // TO SAVE: NOTHING
     function introTestPhase() {
         CreateDiv('sectionTop', 'break');
         CreateDiv('sectionMiddle', 'newPlayers');
@@ -3137,10 +3138,10 @@ $(document).ready(function(){
     };
 
     // INSTRUCTIONS PAGE
-    // NOTHING TO SAVE
+    // TO SAVE: NOTHING
     function InstructionsTestPhase(pageNum){
 
-        var numPages = 3;
+        var numPages = 4;
 
         CreateDiv('sectionVeryTop', 'titleTestPhase');
         CreateDiv('sectionTop', 'informationTestPhasePart1');
@@ -3160,11 +3161,16 @@ $(document).ready(function(){
                 var InfoTP2;
                 break;
             case 2:
-                var titleTP = "<p class = 'textIntro'><span class = 'individualWords'>...but with a twist!</span></p>"; 
-                var InfoTP = "<p class = 'textIntro'> You will still be able to select <span class = 'individualWords'>emoji reactions</span> to different outcomes as before, but <span class = 'individualWords'>we will not display your and other players' reactions</span> after each game round. In other words, your emoji reactions are completely <span class = 'individualWords'>private</span> and won't be seen by other players in the game.</p>";
+                var titleTP = "<p class = 'textIntro'><span class = 'individualWords'>...but with two twists!</span></p>"; 
+                var InfoTP = "<p class = 'textIntro'> First, you will still be able to select <span class = 'individualWords'>emoji reactions</span> to game outcomes as before, but <span class = 'individualWords'>we will not display your and other players' reactions</span> after each game round. In other words, your emoji reactions are completely <span class = 'individualWords'>private</span> and won't be seen by other players in the game.</p>";
                 var InfoTP2;
                 break;
             case 3:
+                var titleTP = "<p class = 'textIntro'><span class = 'individualWords'>...but with two twists!</span></p>"; 
+                var InfoTP = "<p class = 'textIntro'> Second, <span class = 'individualWords'>we will no longer ask you to predict how other members of Lions and Tigers will react to game outcomes</span>. In other words, in this part, we will only ask you to select <span class = 'individualWords'>your own emoji reactions</span> to game outcomes.</p>";
+                var InfoTP2;
+                break;
+            case 4:
                 var titleTP;
                 var InfoTP = '<p class = "textIntro"> When you are ready, enter the game waiting room by clicking on the button <span class = "individualWords">Enter</span>.</p>';
                 var InfoTP2 = '<p class = "textIntro">Since this game is played in <span class = "individualWords">real time</span>, you might need to wait for other players for a bit. </p>';
@@ -3264,7 +3270,7 @@ $(document).ready(function(){
     };
 
     // WAITING ROOM PAGE
-    // NOTHING TO SAVE
+    // TO SAVE: NOTHING
     function waitRoomTP(groupMembership) {
 
         CreateDiv('sectionTop', 'message');
@@ -3467,7 +3473,7 @@ $(document).ready(function(){
     };
     
     // GAME START 
-    // NOTHING TO SAVE
+    // TO SAVE: NOTHING
     function gameStartTP() {
         CreateDiv('sectionTop', 'startingGame');
         CreateDiv('sectionMiddle', 'timerStartingGame');
@@ -3510,7 +3516,9 @@ $(document).ready(function(){
         });            
     };
 
-    // GENERAL CONTROL FUNCTION
+    // From here, different functions are looping.
+
+    ////////// GENERAL CHECK FUNCTION //////////
     function checkToContinueTP(groupMembership, activePlayer, trialNumTP) {
 
         if (trialNumTP <= numTrialsTP) {
@@ -3536,19 +3544,16 @@ $(document).ready(function(){
             // UTC time
             var utcDateTestBlockEnd = new Date().toUTCString();
 
-            // End test phase
+            // Duration of the test block
             endTestBlock = Date.now();
+            var timeTestBlock = msToMinSec(endTestBlock - startTestBlock);
 
-            // Store local time
+            // Store the last three variables
             var localTimeEndTestBlock = [].concat(... new Array(84).fill(localDateTestBlockEnd));
             dataELT.localTimeEndTestBlock = localTimeEndTestBlock; 
 
-            // Store UTC time
             var utcTimeEndTestBlock = [].concat(... new Array(84).fill(utcDateTestBlockEnd));
             dataELT.utcTimeEndTestBlock = utcTimeEndTestBlock; 
-
-            // Store duration
-            var timeTestBlock = msToMinSec(endTestBlock - startTestBlock);
 
             var testBlockDuration = [].concat(... new Array(84).fill(timeTestBlock));
             dataELT.testBlockDuration = testBlockDuration; 
@@ -3569,6 +3574,12 @@ $(document).ready(function(){
             // Participants' reactions
             dataELT.participantReactionsPublic = participantReactionsPublic;
             dataELT.participantReactionsPublicRT = participantReactionsPublicRT;
+
+            // Participants' predictions
+            dataELT.participantPredictionsIngroup = participantReactionsPublicIngroup;
+            dataELT.participantPredictionsIngroupRT = participantReactionsPublicIngroupRT;
+            dataELT.participantPredictionsOutgroup = participantReactionsPublicOutgroup;
+            dataELT.participantPredictionsOutgroupRT = participantReactionsPublicOutgroupRT;
 
             // Display of outcome reactions
             dataELT.tigerPlayersDisplayed = tigerPlayersDisplayed;
@@ -3599,7 +3610,7 @@ $(document).ready(function(){
     ////////// NOT PARTICIPANT //////////
 
     // GAME CHOICE 
-    // NOTHING TO SAVE
+    // TO SAVE: NOTHING  
     function gameChoiceNotParticipantTP(activePlayer, trialNumTP) {
 
         startTimeChoice = new Date().getTime();
@@ -3791,7 +3802,7 @@ $(document).ready(function(){
     // TO SAVE: REACTION TIME, RESPONSE
     function outcomeReactionChoiceNotParticipantPublicTP(activePlayer, trialNumTP){
 
-        startTimeEmojiChoice = new Date().getTime();
+        startTimeEmojiChoiceSelf = new Date().getTime();
         
         // First dim screen & hide canvas
         dimScreen();
@@ -3801,7 +3812,7 @@ $(document).ready(function(){
         CreateDiv('sectionMiddle', 'emotionalReactionsPrompt');
         CreateDiv('sectionBottom', 'emotionalReactions');
 
-        var emojiReaction = "<p class = 'textInstructions' id = 'emojiPrompt'>How do you feel because of this player's outcome?</p>";
+        var emojiReaction = "<p class = 'textInstructions' id = 'emojiPrompt'>How do <span class = 'individualWords'>you</span> feel because of this player's outcome?</p>";
 
         $('#emotionalReactionsPrompt').html(emojiReaction);
         $('#emotionalReactionsPrompt').show();
@@ -3843,8 +3854,8 @@ $(document).ready(function(){
         // What happens when each of the emojis is clicked?
         $('#valence1').click(function() {
             if(!event.detail || event.detail == 1){
-                clickTimeEmojiChoice = new Date().getTime();
-                specificParticipantReactionRT = calculateRT(startTimeEmojiChoice, clickTimeEmojiChoice);
+                clickTimeEmojiChoiceSelf = new Date().getTime();
+                specificParticipantReactionRT = calculateRT(startTimeEmojiChoiceSelf, clickTimeEmojiChoiceSelf);
 
                 $('#emotionalReactionsPrompt').empty();
                 $('#emotionalReactions').empty();
@@ -3855,6 +3866,13 @@ $(document).ready(function(){
                 participantReactionsPublicRT.push(specificParticipantReactionRT);
 
                 displayDelay.push(waitTimeToContinue);
+
+                //  Add content to other variables that do not have trial-by-trial values
+                participantReactionsPublicIngroup.push('No display');
+                participantReactionsPublicIngroupRT.push('No display'); 
+                participantReactionsPublicOutgroup.push('No display');
+                participantReactionsPublicOutgroupRT.push('No display');
+
                 tigerPlayersDisplayed.push('No display');
                 tigerPlayersReactions.push('No display');
                 lionPlayersDisplayed.push('No display');
@@ -3879,8 +3897,8 @@ $(document).ready(function(){
 
         $('#valence2').click(function() {
             if(!event.detail || event.detail == 1){
-                clickTimeEmojiChoice = new Date().getTime();
-                specificParticipantReactionRT = calculateRT(startTimeEmojiChoice, clickTimeEmojiChoice);
+                clickTimeEmojiChoiceSelf = new Date().getTime();
+                specificParticipantReactionRT = calculateRT(startTimeEmojiChoiceSelf, clickTimeEmojiChoiceSelf);
 
                 $('#emotionalReactionsPrompt').empty();
                 $('#emotionalReactions').empty();
@@ -3891,6 +3909,13 @@ $(document).ready(function(){
                 participantReactionsPublicRT.push(specificParticipantReactionRT);
 
                 displayDelay.push(waitTimeToContinue);
+
+                //  Add content to other variables that do not have trial-by-trial values
+                participantReactionsPublicIngroup.push('No display');
+                participantReactionsPublicIngroupRT.push('No display'); 
+                participantReactionsPublicOutgroup.push('No display');
+                participantReactionsPublicOutgroupRT.push('No display');
+
                 tigerPlayersDisplayed.push('No display');
                 tigerPlayersReactions.push('No display');
                 lionPlayersDisplayed.push('No display');
@@ -3915,8 +3940,8 @@ $(document).ready(function(){
 
         $('#valence3').click(function() {
             if(!event.detail || event.detail == 1){
-                clickTimeEmojiChoice = new Date().getTime();
-                specificParticipantReactionRT = calculateRT(startTimeEmojiChoice, clickTimeEmojiChoice);
+                clickTimeEmojiChoiceSelf = new Date().getTime();
+                specificParticipantReactionRT = calculateRT(startTimeEmojiChoiceSelf, clickTimeEmojiChoiceSelf);
 
                 $('#emotionalReactionsPrompt').empty();
                 $('#emotionalReactions').empty();
@@ -3927,293 +3952,13 @@ $(document).ready(function(){
                 participantReactionsPublicRT.push(specificParticipantReactionRT);
 
                 displayDelay.push(waitTimeToContinue);
-                tigerPlayersDisplayed.push('No display');
-                tigerPlayersReactions.push('No display');
-                lionPlayersDisplayed.push('No display');
-                lionPlayersReactions.push('No display');
 
-                setTimeout(function() {
+                //  Add content to other variables that do not have trial-by-trial values
+                participantReactionsPublicIngroup.push('No display');
+                participantReactionsPublicIngroupRT.push('No display'); 
+                participantReactionsPublicOutgroup.push('No display');
+                participantReactionsPublicOutgroupRT.push('No display');
 
-                    undimScreen();
-
-                    // Clean screen
-                    $('#sectionTop').empty();
-                    $('#sectionMiddle').empty();
-                    $('#sectionBottom').empty();
-
-                    // Unmark player
-                    unmarkInactivePlayer(activePlayer);
-                    checkToContinueTP(currentGroupMembership, nextPlayerTP, trialNumTP + 1);
-                }, waitTimeToContinue);
-            };
-        }); 
-
-        $('#valence4').click(function() {
-            if(!event.detail || event.detail == 1){
-                clickTimeEmojiChoice = new Date().getTime();
-                specificParticipantReactionRT = calculateRT(startTimeEmojiChoice, clickTimeEmojiChoice);
-
-                $('#emotionalReactionsPrompt').empty();
-                $('#emotionalReactions').empty();
-                $('#gameOutcome').fadeOut(500);
-
-                specificParticipantReaction = image_id_map["valence4"];
-                participantReactionsPublic.push(specificParticipantReaction);
-                participantReactionsPublicRT.push(specificParticipantReactionRT);
-
-                displayDelay.push(waitTimeToContinue);
-                tigerPlayersDisplayed.push('No display');
-                tigerPlayersReactions.push('No display');
-                lionPlayersDisplayed.push('No display');
-                lionPlayersReactions.push('No display');
-
-                setTimeout(function() {
-
-                    undimScreen();
-
-                    // Clean screen
-                    $('#sectionTop').empty();
-                    $('#sectionMiddle').empty();
-                    $('#sectionBottom').empty();
-
-                    // Unmark player
-                    unmarkInactivePlayer(activePlayer);
-                    checkToContinueTP(currentGroupMembership, nextPlayerTP, trialNumTP + 1);
-
-                }, waitTimeToContinue);
-            };
-        }); 
-
-        $('#valence5').click(function() {
-            if(!event.detail || event.detail == 1){
-                clickTimeEmojiChoice = new Date().getTime();
-                specificParticipantReactionRT = calculateRT(startTimeEmojiChoice, clickTimeEmojiChoice);
-
-                $('#emotionalReactionsPrompt').empty();
-                $('#emotionalReactions').empty();
-                $('#gameOutcome').fadeOut(500);
-
-                specificParticipantReaction = image_id_map["valence5"];
-                participantReactionsPublic.push(specificParticipantReaction);
-                participantReactionsPublicRT.push(specificParticipantReactionRT);
-
-                displayDelay.push(waitTimeToContinue);
-                tigerPlayersDisplayed.push('No display');
-                tigerPlayersReactions.push('No display');
-                lionPlayersDisplayed.push('No display');
-                lionPlayersReactions.push('No display');
-
-                setTimeout(function() {
-
-                    undimScreen();
-
-                    // Clean screen
-                    $('#sectionTop').empty();
-                    $('#sectionMiddle').empty();
-                    $('#sectionBottom').empty();
-
-                    // Unmark player
-                    unmarkInactivePlayer(activePlayer);
-                    checkToContinueTP(currentGroupMembership, nextPlayerTP, trialNumTP + 1);
-
-                }, waitTimeToContinue);
-            };
-        }); 
-
-        $('#valence6').click(function() {
-            if(!event.detail || event.detail == 1){
-                clickTimeEmojiChoice = new Date().getTime();
-                specificParticipantReactionRT = calculateRT(startTimeEmojiChoice, clickTimeEmojiChoice);
-
-                $('#emotionalReactionsPrompt').empty();
-                $('#emotionalReactions').empty();
-                $('#gameOutcome').fadeOut(500);
-
-                specificParticipantReaction = image_id_map["valence6"];
-                participantReactionsPublic.push(specificParticipantReaction);
-                participantReactionsPublicRT.push(specificParticipantReactionRT);
-
-                displayDelay.push(waitTimeToContinue);
-                tigerPlayersDisplayed.push('No display');
-                tigerPlayersReactions.push('No display');
-                lionPlayersDisplayed.push('No display');
-                lionPlayersReactions.push('No display');
-
-                setTimeout(function() {
-
-                    undimScreen();
-
-                    // Clean screen
-                    $('#sectionTop').empty();
-                    $('#sectionMiddle').empty();
-                    $('#sectionBottom').empty();
-
-                    // Unmark player
-                    unmarkInactivePlayer(activePlayer);
-                    checkToContinueTP(currentGroupMembership, nextPlayerTP, trialNumTP + 1);
-
-                }, waitTimeToContinue);
-            };
-        }); 
-
-        $('#valence7').click(function() {
-            if(!event.detail || event.detail == 1){
-                clickTimeEmojiChoice = new Date().getTime();
-                specificParticipantReactionRT = calculateRT(startTimeEmojiChoice, clickTimeEmojiChoice);
-
-                $('#emotionalReactionsPrompt').empty();
-                $('#emotionalReactions').empty();
-                $('#gameOutcome').fadeOut(500);
-
-                specificParticipantReaction = image_id_map["valence7"];
-                participantReactionsPublic.push(specificParticipantReaction);
-                participantReactionsPublicRT.push(specificParticipantReactionRT);
-
-                displayDelay.push(waitTimeToContinue);
-                tigerPlayersDisplayed.push('No display');
-                tigerPlayersReactions.push('No display');
-                lionPlayersDisplayed.push('No display');
-                lionPlayersReactions.push('No display');
-
-                setTimeout(function() {
-
-                    undimScreen();
-
-                    // Clean screen
-                    $('#sectionTop').empty();
-                    $('#sectionMiddle').empty();
-                    $('#sectionBottom').empty();
-
-                    // Unmark player
-                    unmarkInactivePlayer(activePlayer);
-                    checkToContinueTP(currentGroupMembership, nextPlayerTP, trialNumTP + 1);
-
-                }, waitTimeToContinue);
-            };
-        }); 
-
-        $('#valence8').click(function() {
-            if(!event.detail || event.detail == 1){
-                clickTimeEmojiChoice = new Date().getTime();
-                specificParticipantReactionRT = calculateRT(startTimeEmojiChoice, clickTimeEmojiChoice);
-
-                $('#emotionalReactionsPrompt').empty();
-                $('#emotionalReactions').empty();
-                $('#gameOutcome').fadeOut(500);
-
-                specificParticipantReaction = image_id_map["valence8"];
-                participantReactionsPublic.push(specificParticipantReaction);
-                participantReactionsPublicRT.push(specificParticipantReactionRT);
-
-                displayDelay.push(waitTimeToContinue);
-                tigerPlayersDisplayed.push('No display');
-                tigerPlayersReactions.push('No display');
-                lionPlayersDisplayed.push('No display');
-                lionPlayersReactions.push('No display');
-
-                setTimeout(function() {
-
-                    undimScreen();
-
-                    // Clean screen
-                    $('#sectionTop').empty();
-                    $('#sectionMiddle').empty();
-                    $('#sectionBottom').empty();
-
-                    // Unmark player
-                    unmarkInactivePlayer(activePlayer);
-                    checkToContinueTP(currentGroupMembership, nextPlayerTP, trialNumTP + 1);
-
-                }, waitTimeToContinue);
-            };
-        }); 
-
-        $('#valence9').click(function() {
-            if(!event.detail || event.detail == 1){
-                clickTimeEmojiChoice = new Date().getTime();
-                specificParticipantReactionRT = calculateRT(startTimeEmojiChoice, clickTimeEmojiChoice);
-
-                $('#emotionalReactionsPrompt').empty();
-                $('#emotionalReactions').empty();
-                $('#gameOutcome').fadeOut(500);
-
-                specificParticipantReaction = image_id_map["valence9"];
-                participantReactionsPublic.push(specificParticipantReaction);
-                participantReactionsPublicRT.push(specificParticipantReactionRT);
-
-                displayDelay.push(waitTimeToContinue);
-                tigerPlayersDisplayed.push('No display');
-                tigerPlayersReactions.push('No display');
-                lionPlayersDisplayed.push('No display');
-                lionPlayersReactions.push('No display');
-
-                setTimeout(function() {
-
-                    undimScreen();
-
-                    // Clean screen
-                    $('#sectionTop').empty();
-                    $('#sectionMiddle').empty();
-                    $('#sectionBottom').empty();
-
-                    // Unmark player
-                    unmarkInactivePlayer(activePlayer);
-                    checkToContinueTP(currentGroupMembership, nextPlayerTP, trialNumTP + 1);
-
-                }, waitTimeToContinue);
-            };
-        }); 
-
-        $('#valence10').click(function() {
-            if(!event.detail || event.detail == 1){
-                clickTimeEmojiChoice = new Date().getTime();
-                specificParticipantReactionRT = calculateRT(startTimeEmojiChoice, clickTimeEmojiChoice);
-
-                $('#emotionalReactionsPrompt').empty();
-                $('#emotionalReactions').empty();
-                $('#gameOutcome').fadeOut(500);
-
-                specificParticipantReaction = image_id_map["valence10"];
-                participantReactionsPublic.push(specificParticipantReaction);
-                participantReactionsPublicRT.push(specificParticipantReactionRT);
-
-                displayDelay.push(waitTimeToContinue);
-                tigerPlayersDisplayed.push('No display');
-                tigerPlayersReactions.push('No display');
-                lionPlayersDisplayed.push('No display');
-                lionPlayersReactions.push('No display');
-
-                setTimeout(function() {
-
-                    undimScreen();
-
-                    // Clean screen
-                    $('#sectionTop').empty();
-                    $('#sectionMiddle').empty();
-                    $('#sectionBottom').empty();
-
-                    // Unmark player
-                    unmarkInactivePlayer(activePlayer);
-                    checkToContinueTP(currentGroupMembership, nextPlayerTP, trialNumTP + 1);
-
-                }, waitTimeToContinue);
-            };
-        }); 
-
-        $('#valence11').click(function() {
-            if(!event.detail || event.detail == 1){
-                clickTimeEmojiChoice = new Date().getTime();
-                specificParticipantReactionRT = calculateRT(startTimeEmojiChoice, clickTimeEmojiChoice);
-
-                $('#emotionalReactionsPrompt').empty();
-                $('#emotionalReactions').empty();
-                $('#gameOutcome').fadeOut(500);
-
-                specificParticipantReaction = image_id_map["valence11"];
-                participantReactionsPublic.push(specificParticipantReaction);
-                participantReactionsPublicRT.push(specificParticipantReactionRT);
-
-                displayDelay.push(waitTimeToContinue);
                 tigerPlayersDisplayed.push('No display');
                 tigerPlayersReactions.push('No display');
                 lionPlayersDisplayed.push('No display');
@@ -4365,7 +4110,6 @@ $(document).ready(function(){
         });
     };
 
-
     // GAME OUTCOME, BUT WHEN IT'S PARTICIPANT'S TURN
     // TO SAVE: ACTIVE PLAYER, TRIAL NUMBER, TRIAL OUTCOME (LOSS/VICTORY), TRIAL OUTCOME RT, COMPUTER & PLAYER NUMBERS, BLOCK
     function gameOutcomeParticipantTP(activePlayer, trialNumTP) {
@@ -4459,7 +4203,7 @@ $(document).ready(function(){
     // TO SAVE: REACTION TIME, RESPONSE
     function outcomeReactionChoiceParticipantTP(activePlayer, trialNumTP){
 
-        startTimeEmojiChoice = new Date().getTime();
+        startTimeEmojiChoiceSelf = new Date().getTime();
         
         // First dim screen & hide canvas
         dimScreen();
@@ -4470,14 +4214,14 @@ $(document).ready(function(){
         CreateDiv('sectionBottom', 'emotionalReactions');
 
         // Display prompt
-        var emojiReaction = "<p class = 'textInstructions' id = 'emojiPrompt'>How bad/good do you feel because of your outcome?</p>";
+        var emojiReaction = "<p class = 'textInstructions' id = 'emojiPrompt'>How do <span class = 'individualWords'>you</span> feel because of your outcome?</p>";
  
         $('#emotionalReactionsPrompt').html(emojiReaction);
         $('#emotionalReactionsPrompt').show();
 
         // Display emojis (Defined in the beginning)
         // Note: .show() needs to be included so that you can display the emoji scale on multiple trials without it being deleted by .fadeOut()
-        emojiImagesSize = calculateAspectRatioFit(527, 508, midDiv.clientWidth / 12, midDiv.clientHeight);
+        emojiImagesSize = calculateAspectRatioFit(527, 508, midDiv.clientWidth / 3, midDiv.clientHeight);
 
         emojiImages = document.createElement("div");
         emojiImages.id = "emojiReactions";
@@ -4491,42 +4235,15 @@ $(document).ready(function(){
 
         emoji3.width = emojiImagesSize.width;
         emoji3.height = emojiImagesSize.height;
-
-        emoji4.width = emojiImagesSize.width;
-        emoji4.height = emojiImagesSize.height;
-
-        emoji5.width = emojiImagesSize.width;
-        emoji5.height = emojiImagesSize.height;
-
-        emoji6.width = emojiImagesSize.width;
-        emoji6.height = emojiImagesSize.height;
-
-        emoji7.width = emojiImagesSize.width;
-        emoji7.height = emojiImagesSize.height;
-        
-        emoji8.width = emojiImagesSize.width;
-        emoji8.height = emojiImagesSize.height;
-
-        emoji9.width = emojiImagesSize.width;
-        emoji9.height = emojiImagesSize.height;
-
-        emoji10.width = emojiImagesSize.width;
-        emoji10.height = emojiImagesSize.height;
-
-        emoji11.width = emojiImagesSize.width;
-        emoji11.height = emojiImagesSize.height;
   
-        emojiImages.appendChild(emoji1);
-        emojiImages.appendChild(emoji2);
-        emojiImages.appendChild(emoji3);
-        emojiImages.appendChild(emoji4);
-        emojiImages.appendChild(emoji5);
-        emojiImages.appendChild(emoji6);
-        emojiImages.appendChild(emoji7);
-        emojiImages.appendChild(emoji8);
-        emojiImages.appendChild(emoji9);
-        emojiImages.appendChild(emoji10);
-        emojiImages.appendChild(emoji11);
+        // Determine which two emojis will be presented as options depending on the outcome
+        if (specificTrialOutcome == "Victory") {
+            emojiImages.appendChild(emoji2);
+            emojiImages.appendChild(emoji3);
+        } else if (specificTrialOutcome == "Loss") {
+            emojiImages.appendChild(emoji1);
+            emojiImages.appendChild(emoji2);
+        };
 
         $('#emotionalReactions').html(emojiImages);
         $('#emotionalReactions').show();
@@ -4542,8 +4259,8 @@ $(document).ready(function(){
         // What happens when each of the emojis is clicked?
         $('#valence1').click(function() {
             if(!event.detail || event.detail == 1){
-                clickTimeEmojiChoice = new Date().getTime();
-                specificParticipantReactionRT = calculateRT(startTimeEmojiChoice, clickTimeEmojiChoice);
+                clickTimeEmojiChoiceSelf = new Date().getTime();
+                specificParticipantReactionRT = calculateRT(startTimeEmojiChoiceSelf, clickTimeEmojiChoiceSelf);
 
                 $('#emotionalReactionsPrompt').empty();
                 $('#emotionalReactions').empty();
@@ -4554,11 +4271,17 @@ $(document).ready(function(){
                 participantReactionsPublicRT.push(specificParticipantReactionRT);
 
                 displayDelay.push(waitTimeToContinue);
+
+                //  Add content to other variables that do not have trial-by-trial values
+                participantReactionsPublicIngroup.push('No display');
+                participantReactionsPublicIngroupRT.push('No display'); 
+                participantReactionsPublicOutgroup.push('No display');
+                participantReactionsPublicOutgroupRT.push('No display');
+
                 tigerPlayersDisplayed.push('No display');
                 tigerPlayersReactions.push('No display');
                 lionPlayersDisplayed.push('No display');
                 lionPlayersReactions.push('No display');
-
 
                 setTimeout(function() {
 
@@ -4579,8 +4302,8 @@ $(document).ready(function(){
 
         $('#valence2').click(function() {
             if(!event.detail || event.detail == 1){
-                clickTimeEmojiChoice = new Date().getTime();
-                specificParticipantReactionRT = calculateRT(startTimeEmojiChoice, clickTimeEmojiChoice);
+                clickTimeEmojiChoiceSelf = new Date().getTime();
+                specificParticipantReactionRT = calculateRT(startTimeEmojiChoiceSelf, clickTimeEmojiChoiceSelf);
 
                 $('#emotionalReactionsPrompt').empty();
                 $('#emotionalReactions').empty();
@@ -4591,11 +4314,17 @@ $(document).ready(function(){
                 participantReactionsPublicRT.push(specificParticipantReactionRT);
 
                 displayDelay.push(waitTimeToContinue);
+
+                //  Add content to other variables that do not have trial-by-trial values
+                participantReactionsPublicIngroup.push('No display');
+                participantReactionsPublicIngroupRT.push('No display'); 
+                participantReactionsPublicOutgroup.push('No display');
+                participantReactionsPublicOutgroupRT.push('No display');
+
                 tigerPlayersDisplayed.push('No display');
                 tigerPlayersReactions.push('No display');
                 lionPlayersDisplayed.push('No display');
                 lionPlayersReactions.push('No display');
-
 
                 setTimeout(function() {
 
@@ -4616,8 +4345,8 @@ $(document).ready(function(){
 
         $('#valence3').click(function() {
             if(!event.detail || event.detail == 1){
-                clickTimeEmojiChoice = new Date().getTime();
-                specificParticipantReactionRT = calculateRT(startTimeEmojiChoice, clickTimeEmojiChoice);
+                clickTimeEmojiChoiceSelf = new Date().getTime();
+                specificParticipantReactionRT = calculateRT(startTimeEmojiChoiceSelf, clickTimeEmojiChoiceSelf);
 
                 $('#emotionalReactionsPrompt').empty();
                 $('#emotionalReactions').empty();
@@ -4628,307 +4357,17 @@ $(document).ready(function(){
                 participantReactionsPublicRT.push(specificParticipantReactionRT);
 
                 displayDelay.push(waitTimeToContinue);
+
+                //  Add content to other variables that do not have trial-by-trial values
+                participantReactionsPublicIngroup.push('No display');
+                participantReactionsPublicIngroupRT.push('No display'); 
+                participantReactionsPublicOutgroup.push('No display');
+                participantReactionsPublicOutgroupRT.push('No display');
+
                 tigerPlayersDisplayed.push('No display');
                 tigerPlayersReactions.push('No display');
                 lionPlayersDisplayed.push('No display');
                 lionPlayersReactions.push('No display');
-
-
-                setTimeout(function() {
-
-                    undimScreen();
-
-                    // Clean screen
-                    $('#sectionTop').empty();
-                    $('#sectionMiddle').empty();
-                    $('#sectionBottom').empty();
-
-                    // Unmark player
-                    unmarkInactivePlayer(activePlayer);
-                    checkToContinueTP(currentGroupMembership, nextPlayerTP, trialNumTP + 1);
-
-                }, waitTimeToContinue);
-            };
-        });
-
-        $('#valence4').click(function() {
-            if(!event.detail || event.detail == 1){
-                clickTimeEmojiChoice = new Date().getTime();
-                specificParticipantReactionRT = calculateRT(startTimeEmojiChoice, clickTimeEmojiChoice);
-
-                $('#emotionalReactionsPrompt').empty();
-                $('#emotionalReactions').empty();
-                $('#gameOutcome').fadeOut(500);
-
-                specificParticipantReaction = image_id_map["valence4"];
-                participantReactionsPublic.push(specificParticipantReaction);
-                participantReactionsPublicRT.push(specificParticipantReactionRT);
-
-                displayDelay.push(waitTimeToContinue);
-                tigerPlayersDisplayed.push('No display');
-                tigerPlayersReactions.push('No display');
-                lionPlayersDisplayed.push('No display');
-                lionPlayersReactions.push('No display');
-
-
-                setTimeout(function() {
-
-                    undimScreen();
-
-                    // Clean screen
-                    $('#sectionTop').empty();
-                    $('#sectionMiddle').empty();
-                    $('#sectionBottom').empty();
-
-                    // Unmark player
-                    unmarkInactivePlayer(activePlayer);
-                    checkToContinueTP(currentGroupMembership, nextPlayerTP, trialNumTP + 1);
-
-                }, waitTimeToContinue);
-            };
-        });
-
-        $('#valence5').click(function() {
-            if(!event.detail || event.detail == 1){
-                clickTimeEmojiChoice = new Date().getTime();
-                specificParticipantReactionRT = calculateRT(startTimeEmojiChoice, clickTimeEmojiChoice);
-
-                $('#emotionalReactionsPrompt').empty();
-                $('#emotionalReactions').empty();
-                $('#gameOutcome').fadeOut(500);
-
-                specificParticipantReaction = image_id_map["valence5"];
-                participantReactionsPublic.push(specificParticipantReaction);
-                participantReactionsPublicRT.push(specificParticipantReactionRT);
-
-                displayDelay.push(waitTimeToContinue);
-                tigerPlayersDisplayed.push('No display');
-                tigerPlayersReactions.push('No display');
-                lionPlayersDisplayed.push('No display');
-                lionPlayersReactions.push('No display');
-
-
-                setTimeout(function() {
-
-                    undimScreen();
-
-                    // Clean screen
-                    $('#sectionTop').empty();
-                    $('#sectionMiddle').empty();
-                    $('#sectionBottom').empty();
-
-                    // Unmark player
-                    unmarkInactivePlayer(activePlayer);
-                    checkToContinueTP(currentGroupMembership, nextPlayerTP, trialNumTP + 1);
-
-                }, waitTimeToContinue);
-            };
-        });
-
-        $('#valence6').click(function() {
-            if(!event.detail || event.detail == 1){
-                clickTimeEmojiChoice = new Date().getTime();
-                specificParticipantReactionRT = calculateRT(startTimeEmojiChoice, clickTimeEmojiChoice);
-
-                $('#emotionalReactionsPrompt').empty();
-                $('#emotionalReactions').empty();
-                $('#gameOutcome').fadeOut(500);
-
-                specificParticipantReaction = image_id_map["valence6"];
-                participantReactionsPublic.push(specificParticipantReaction);
-                participantReactionsPublicRT.push(specificParticipantReactionRT);
-
-                displayDelay.push(waitTimeToContinue);
-                tigerPlayersDisplayed.push('No display');
-                tigerPlayersReactions.push('No display');
-                lionPlayersDisplayed.push('No display');
-                lionPlayersReactions.push('No display');
-
-
-                setTimeout(function() {
-
-                    undimScreen();
-
-                    // Clean screen
-                    $('#sectionTop').empty();
-                    $('#sectionMiddle').empty();
-                    $('#sectionBottom').empty();
-
-                    // Unmark player
-                    unmarkInactivePlayer(activePlayer);
-                    checkToContinueTP(currentGroupMembership, nextPlayerTP, trialNumTP + 1);
-
-                }, waitTimeToContinue);
-            };
-        });
-
-        $('#valence7').click(function() {
-            if(!event.detail || event.detail == 1){
-                clickTimeEmojiChoice = new Date().getTime();
-                specificParticipantReactionRT = calculateRT(startTimeEmojiChoice, clickTimeEmojiChoice);
-
-                $('#emotionalReactionsPrompt').empty();
-                $('#emotionalReactions').empty();
-                $('#gameOutcome').fadeOut(500);
-
-                specificParticipantReaction = image_id_map["valence7"];
-                participantReactionsPublic.push(specificParticipantReaction);
-                participantReactionsPublicRT.push(specificParticipantReactionRT);
-
-                displayDelay.push(waitTimeToContinue);
-                tigerPlayersDisplayed.push('No display');
-                tigerPlayersReactions.push('No display');
-                lionPlayersDisplayed.push('No display');
-                lionPlayersReactions.push('No display');
-
-
-                setTimeout(function() {
-
-                    undimScreen();
-
-                    // Clean screen
-                    $('#sectionTop').empty();
-                    $('#sectionMiddle').empty();
-                    $('#sectionBottom').empty();
-
-                    // Unmark player
-                    unmarkInactivePlayer(activePlayer);
-                    checkToContinueTP(currentGroupMembership, nextPlayerTP, trialNumTP + 1);
-
-                }, waitTimeToContinue);
-            };
-        });
-
-        $('#valence8').click(function() {
-            if(!event.detail || event.detail == 1){
-                clickTimeEmojiChoice = new Date().getTime();
-                specificParticipantReactionRT = calculateRT(startTimeEmojiChoice, clickTimeEmojiChoice);
-
-                $('#emotionalReactionsPrompt').empty();
-                $('#emotionalReactions').empty();
-                $('#gameOutcome').fadeOut(500);
-
-                specificParticipantReaction = image_id_map["valence8"];
-                participantReactionsPublic.push(specificParticipantReaction);
-                participantReactionsPublicRT.push(specificParticipantReactionRT);
-
-                displayDelay.push(waitTimeToContinue);
-                tigerPlayersDisplayed.push('No display');
-                tigerPlayersReactions.push('No display');
-                lionPlayersDisplayed.push('No display');
-                lionPlayersReactions.push('No display');
-
-
-                setTimeout(function() {
-
-                    undimScreen();
-
-                    // Clean screen
-                    $('#sectionTop').empty();
-                    $('#sectionMiddle').empty();
-                    $('#sectionBottom').empty();
-
-                    // Unmark player
-                    unmarkInactivePlayer(activePlayer);
-                    checkToContinueTP(currentGroupMembership, nextPlayerTP, trialNumTP + 1);
-
-                }, waitTimeToContinue);
-            };
-        }); 
-
-        $('#valence9').click(function() {
-            if(!event.detail || event.detail == 1){
-                clickTimeEmojiChoice = new Date().getTime();
-                specificParticipantReactionRT = calculateRT(startTimeEmojiChoice, clickTimeEmojiChoice);
-
-                $('#emotionalReactionsPrompt').empty();
-                $('#emotionalReactions').empty();
-                $('#gameOutcome').fadeOut(500);
-
-                specificParticipantReaction = image_id_map["valence9"];
-                participantReactionsPublic.push(specificParticipantReaction);
-                participantReactionsPublicRT.push(specificParticipantReactionRT);
-
-                displayDelay.push(waitTimeToContinue);
-                tigerPlayersDisplayed.push('No display');
-                tigerPlayersReactions.push('No display');
-                lionPlayersDisplayed.push('No display');
-                lionPlayersReactions.push('No display');
-
-
-                setTimeout(function() {
-
-                    undimScreen();
-
-                    // Clean screen
-                    $('#sectionTop').empty();
-                    $('#sectionMiddle').empty();
-                    $('#sectionBottom').empty();
-
-                    // Unmark player
-                    unmarkInactivePlayer(activePlayer);
-                    checkToContinueTP(currentGroupMembership, nextPlayerTP, trialNumTP + 1);
-
-                }, waitTimeToContinue);
-            };
-        });
-
-        $('#valence10').click(function() {
-            if(!event.detail || event.detail == 1){
-                clickTimeEmojiChoice = new Date().getTime();
-                specificParticipantReactionRT = calculateRT(startTimeEmojiChoice, clickTimeEmojiChoice);
-
-                $('#emotionalReactionsPrompt').empty();
-                $('#emotionalReactions').empty();
-                $('#gameOutcome').fadeOut(500);
-
-                specificParticipantReaction = image_id_map["valence10"];
-                participantReactionsPublic.push(specificParticipantReaction);
-                participantReactionsPublicRT.push(specificParticipantReactionRT);
-
-                displayDelay.push(waitTimeToContinue);
-                tigerPlayersDisplayed.push('No display');
-                tigerPlayersReactions.push('No display');
-                lionPlayersDisplayed.push('No display');
-                lionPlayersReactions.push('No display');
-
-
-                setTimeout(function() {
-
-                    undimScreen();
-
-                    // Clean screen
-                    $('#sectionTop').empty();
-                    $('#sectionMiddle').empty();
-                    $('#sectionBottom').empty();
-
-                    // Unmark player
-                    unmarkInactivePlayer(activePlayer);
-                    checkToContinueTP(currentGroupMembership, nextPlayerTP, trialNumTP + 1);
-
-                }, waitTimeToContinue);
-            };
-        });
-
-        $('#valence11').click(function() {
-            if(!event.detail || event.detail == 1){
-                clickTimeEmojiChoice = new Date().getTime();
-                specificParticipantReactionRT = calculateRT(startTimeEmojiChoice, clickTimeEmojiChoice);
-
-                $('#emotionalReactionsPrompt').empty();
-                $('#emotionalReactions').empty();
-                $('#gameOutcome').fadeOut(500);
-
-                specificParticipantReaction = image_id_map["valence11"];
-                participantReactionsPublic.push(specificParticipantReaction);
-                participantReactionsPublicRT.push(specificParticipantReactionRT);
-
-                displayDelay.push(waitTimeToContinue);
-                tigerPlayersDisplayed.push('No display');
-                tigerPlayersReactions.push('No display');
-                lionPlayersDisplayed.push('No display');
-                lionPlayersReactions.push('No display');
-
 
                 setTimeout(function() {
 
@@ -4948,8 +4387,7 @@ $(document).ready(function(){
         });
     };
 
-    // EXITING GAME PAGE
-        
+    // EXITING GAME PAGE    
     function exitingGamePage() {
         CreateDiv('sectionTop', 'goodbyeMessage');
         CreateDiv('sectionMiddle', 'exitingFlash');
@@ -5122,99 +4560,6 @@ $(document).ready(function(){
     function undimMidScreen() {
         midDiv.style.opacity = "1";
     };
-    
-    
-    // Generate reactions for the learning task
-    async function getEmotionalReactions(){
-        const responsePosOutcomeEmp = await fetch('assets/emotionalReactionsPosOutcome_Empathy.csv');
-        const responseNegOutcomeEmp = await fetch('assets/emotionalReactionsNegOutcome_Empathy.csv');
-        const responseApathy = await fetch('assets/emotionalReactions_Apathy.csv');
-        const dataPosOutcomeEmp = await responsePosOutcomeEmp.text();
-        const dataNegOutcomeEmp = await responseNegOutcomeEmp.text();
-        const dataApathy = await responseApathy.text();
-
-        const tablePosOutcomeEmp = dataPosOutcomeEmp.split(/\n/);
-        const tableNegOutcomeEmp = dataNegOutcomeEmp.split(/\n/);
-        const tableApathy = dataApathy.split(/\n/);
-
-        // Positive outcome empathic reactions
-        tablePosOutcomeEmp.forEach(rowPosOutcomeEmp => {
-            const columnsPosOutcomeEmp = rowPosOutcomeEmp.split(',');
-            const indecesPosOutcomeEmp = toNumbers(jsPsych.randomization.sampleWithoutReplacement(Array.from(Array(200).keys()), 6))
-
-            // Integer values
-            posOutcome_withinGroup_Rounded_IN.push(columnsPosOutcomeEmp[indecesPosOutcomeEmp[0]]);
-            posOutcome_withinGroup_Rounded_OUT.push(columnsPosOutcomeEmp[indecesPosOutcomeEmp[1]]);
-
-            posOutcome_betweenGroup_Emp_Emp_Rounded_IN.push(columnsPosOutcomeEmp[indecesPosOutcomeEmp[2]]);
-            posOutcome_betweenGroup_Emp_Emp_Rounded_OUT.push(columnsPosOutcomeEmp[indecesPosOutcomeEmp[3]]);
-
-            posOutcome_betweenGroup_Emp_Apa_Rounded_IN.push(columnsPosOutcomeEmp[indecesPosOutcomeEmp[4]]);
-            posOutcome_betweenGroup_Apa_Emp_Rounded_OUT.push(columnsPosOutcomeEmp[indecesPosOutcomeEmp[5]]);	
-
-        });
-
-        // Negative outcome empathic reactions
-        tableNegOutcomeEmp.forEach(rowNegOutcomeEmp => {
-            const columnsNegOutcomeEmp = rowNegOutcomeEmp.split(',');
-            const indecesNegOutcomeEmp = toNumbers(jsPsych.randomization.sampleWithoutReplacement(Array.from(Array(200).keys()), 6))
-
-            // Integer values
-            negOutcome_withinGroup_Rounded_IN.push(columnsNegOutcomeEmp[indecesNegOutcomeEmp[0]]);
-            negOutcome_withinGroup_Rounded_OUT.push(columnsNegOutcomeEmp[indecesNegOutcomeEmp[1]]);
-
-            negOutcome_betweenGroup_Emp_Emp_Rounded_IN.push(columnsNegOutcomeEmp[indecesNegOutcomeEmp[2]]);
-            negOutcome_betweenGroup_Emp_Emp_Rounded_OUT.push(columnsNegOutcomeEmp[indecesNegOutcomeEmp[3]]);
-
-            negOutcome_betweenGroup_Emp_Apa_Rounded_IN.push(columnsNegOutcomeEmp[indecesNegOutcomeEmp[4]]);
-            negOutcome_betweenGroup_Apa_Emp_Rounded_OUT.push(columnsNegOutcomeEmp[indecesNegOutcomeEmp[5]]);
-        });
-
-        // Apathic reactions
-        tableApathy.forEach(rowApathy => {
-            const columnsApathy = rowApathy.split(',');
-            const indecesApathy = toNumbers(jsPsych.randomization.sampleWithoutReplacement(Array.from(Array(200).keys()), 8))
-
-            // Integer values
-            posOutcome_betweenGroup_Apa_Apa_Rounded_IN.push(columnsApathy[indecesApathy[0]]);
-            negOutcome_betweenGroup_Apa_Apa_Rounded_IN.push(columnsApathy[indecesApathy[1]]);
-
-            posOutcome_betweenGroup_Apa_Apa_Rounded_OUT.push(columnsApathy[indecesApathy[2]]);
-            negOutcome_betweenGroup_Apa_Apa_Rounded_OUT.push(columnsApathy[indecesApathy[3]]);
-
-            posOutcome_betweenGroup_Emp_Apa_Rounded_OUT.push(columnsApathy[indecesApathy[4]]);
-            negOutcome_betweenGroup_Emp_Apa_Rounded_OUT.push(columnsApathy[indecesApathy[5]]);
-            posOutcome_betweenGroup_Apa_Emp_Rounded_IN.push(columnsApathy[indecesApathy[6]]);
-            negOutcome_betweenGroup_Apa_Emp_Rounded_IN.push(columnsApathy[indecesApathy[7]]);
-        });
-
-        // Convert to numerical values and shuffle
-        posOutcome_withinGroup_Rounded_IN = toNumbers(shuffle(posOutcome_withinGroup_Rounded_IN));
-        posOutcome_withinGroup_Rounded_OUT = toNumbers(shuffle(posOutcome_withinGroup_Rounded_OUT));
-        negOutcome_withinGroup_Rounded_IN = toNumbers(shuffle(negOutcome_withinGroup_Rounded_IN));
-        negOutcome_withinGroup_Rounded_OUT = toNumbers(shuffle(negOutcome_withinGroup_Rounded_OUT));
-
-        posOutcome_betweenGroup_Emp_Emp_Rounded_IN = toNumbers(shuffle(posOutcome_betweenGroup_Emp_Emp_Rounded_IN));
-        posOutcome_betweenGroup_Emp_Emp_Rounded_OUT = toNumbers(shuffle(posOutcome_betweenGroup_Emp_Emp_Rounded_OUT));
-        negOutcome_betweenGroup_Emp_Emp_Rounded_IN = toNumbers(shuffle(negOutcome_betweenGroup_Emp_Emp_Rounded_IN));
-        negOutcome_betweenGroup_Emp_Emp_Rounded_OUT = toNumbers(shuffle(negOutcome_betweenGroup_Emp_Emp_Rounded_OUT));
-
-        posOutcome_betweenGroup_Apa_Apa_Rounded_IN = toNumbers(shuffle(posOutcome_betweenGroup_Apa_Apa_Rounded_IN));
-        posOutcome_betweenGroup_Apa_Apa_Rounded_OUT = toNumbers(shuffle(posOutcome_betweenGroup_Apa_Apa_Rounded_OUT));
-        negOutcome_betweenGroup_Apa_Apa_Rounded_IN = toNumbers(shuffle(negOutcome_betweenGroup_Apa_Apa_Rounded_IN));
-        negOutcome_betweenGroup_Apa_Apa_Rounded_OUT = toNumbers(shuffle(negOutcome_betweenGroup_Apa_Apa_Rounded_OUT));
-
-        posOutcome_betweenGroup_Emp_Apa_Rounded_IN = toNumbers(shuffle(posOutcome_betweenGroup_Emp_Apa_Rounded_IN));
-        negOutcome_betweenGroup_Emp_Apa_Rounded_IN = toNumbers(shuffle(negOutcome_betweenGroup_Emp_Apa_Rounded_IN));
-        posOutcome_betweenGroup_Emp_Apa_Rounded_OUT = toNumbers(shuffle(posOutcome_betweenGroup_Emp_Apa_Rounded_OUT));
-        negOutcome_betweenGroup_Emp_Apa_Rounded_OUT = toNumbers(shuffle(negOutcome_betweenGroup_Emp_Apa_Rounded_OUT));
-        posOutcome_betweenGroup_Apa_Emp_Rounded_IN = toNumbers(shuffle(posOutcome_betweenGroup_Apa_Emp_Rounded_IN));
-        negOutcome_betweenGroup_Apa_Emp_Rounded_IN = toNumbers(shuffle(negOutcome_betweenGroup_Apa_Emp_Rounded_IN));
-        posOutcome_betweenGroup_Apa_Emp_Rounded_OUT = toNumbers(shuffle(posOutcome_betweenGroup_Apa_Emp_Rounded_OUT));
-        negOutcome_betweenGroup_Apa_Emp_Rounded_OUT = toNumbers(shuffle(negOutcome_betweenGroup_Apa_Emp_Rounded_OUT));
-    
-        return (posOutcome_withinGroup_Rounded_IN, posOutcome_withinGroup_Rounded_OUT, negOutcome_withinGroup_Rounded_IN, negOutcome_withinGroup_Rounded_OUT, posOutcome_betweenGroup_Emp_Emp_Rounded_IN, posOutcome_betweenGroup_Emp_Emp_Rounded_OUT, negOutcome_betweenGroup_Emp_Emp_Rounded_IN, negOutcome_betweenGroup_Emp_Emp_Rounded_OUT, posOutcome_betweenGroup_Apa_Apa_Rounded_IN, posOutcome_betweenGroup_Apa_Apa_Rounded_OUT, negOutcome_betweenGroup_Apa_Apa_Rounded_IN, negOutcome_betweenGroup_Apa_Apa_Rounded_OUT, posOutcome_betweenGroup_Emp_Apa_Rounded_IN, negOutcome_betweenGroup_Emp_Apa_Rounded_IN, posOutcome_betweenGroup_Emp_Apa_Rounded_OUT, negOutcome_betweenGroup_Emp_Apa_Rounded_OUT, posOutcome_betweenGroup_Apa_Emp_Rounded_IN, negOutcome_betweenGroup_Apa_Emp_Rounded_IN, posOutcome_betweenGroup_Apa_Emp_Rounded_OUT, negOutcome_betweenGroup_Apa_Emp_Rounded_OUT);
-    };
 
     // Convert to numbers
     const toNumbers = arr => arr.map(Number);
@@ -5269,95 +4614,9 @@ $(document).ready(function(){
         var rt = end - start;
         return rt;
     }
-
-    // Function to save data to server
-    // function saveData(name, data) {
-    //     $.ajax({
-    //         data: JSON.stringify({filename: name, filedata: data}),
-    //         dataType: 'json',
-    //         url: 'scripts/custom/write_data.php',
-    //         method: 'POST', 
-    //         success: function() {
-    //             console.log('Data saved.');
-    //         }
-    //     });  
-    // }
-
-    // Function to save data to server
-    // function saveData(nameInput, dataInput) {
-    //     var dataToSave = JSON.stringify(dataInput);
-    //     $.post("scripts/custom/write_data.php", {data: dataToSave, filename: nameInput, dirname: "scripts/custom/data"}, function(){
-    //         console.log('Running');
-    //     })
-    // };
-
-    // Function to save data to server
-    // function saveData(nameInput, dataInput) {
-    //     var dataToSave = JSON.stringify(dataInput);
-    //     $.ajax({
-    //         data: dataToSave,
-    //         // data: JSON.stringify({filename: nameInput, filedata: dataInput}),
-    //         dataType: 'json',
-    //         url: 'scripts/custom/write_data.php',
-    //         method: 'POST', 
-    //         success: function() {
-    //             console.log('Data saved.');
-    //         }
-    //     });  
-    // }
     
     // Save data in a csv format
     function saveCSV(ID) {
-
-        // convert dataObject to CSV format
-        // convert DataObject into an array where first entry is the object key
-    
-        // //list of no of trials in each block
-        // const trialsInBlock = [];
-
-        // // for loop to find number of trials in block
-        // for (const entry of entries) {
-        // if (typeof entry[1] === "object" && entry[1].length) {
-        //     if (typeof entry[1][0] === "object" && entry[1][0].length) {
-        //     for (const subentry of entry[1]) {
-        //         trialsInBlock.push(subentry.length);
-        //     }
-        //     break;
-        //     }
-        // }
-        // }
-        // // expand shorter block lists to trial length
-        // // non-objects, lists of non-objects, lists of lists
-        // for (let i=0; i < entries.length; i++) {
-        // const entry = entries[i];
-        // if (typeof entry[1] != "object") {
-        //     // turn into list
-        //     const x = [];
-        //     var y = entry[1];
-        //     for(let b = 0; b < trialsInBlock.length; b++)
-        //     for(let t = 0; t < trialsInBlock[b]; t++)
-        //         x.push(y);
-        //     entries[i][1] = x;
-        // } else {
-        //     // list of lists
-        //     if (typeof entry[1][0] == "object") {
-        //     const x = [];
-        //     for(let b = 0; b < trialsInBlock.length; b++)
-        //     for(let t = 0; t < trialsInBlock[b]; t++)
-        //         x.push(entry[1][b][t]);
-        //     entries[i][1] = x;
-        //     // list
-        //     } else {
-        //     const x = [];
-        //     for(let b = 0; b < trialsInBlock.length; b++)
-        //         for(let t = 0; t < trialsInBlock[b]; t++)
-        //         x.push(entry[1][b]);
-        //     entries[i][1] = x;
-        //     }
-        // }
-        // }
-
-        // console.log(entries);
         saveData("data_" + ID, entries)
     }
 
@@ -5378,8 +4637,7 @@ $(document).ready(function(){
         return newInput.map(row => row.join('|')).join('\n')
     };
 
-    // Preload images to avoid loading delays @ https://perishablepress.com/press/2009/12/28/3-ways-preload-images-css-javascript-ajax/
-    // Functions to preload the images
+    // Function to preload the images
     function preloader() {
         if (document.images) {
 
@@ -5484,19 +4742,4 @@ $(document).ready(function(){
             orangeCard.id = "orangeCardClickable";
         }
     }
-
-    // function addLoadEvent(func) {
-    //     var oldonload = window.onload;
-    //     if (typeof window.onload != 'function') {
-    //         window.onload = func;
-    //     } else {
-    //         window.onload = function() {
-    //             if (oldonload) {
-    //                 oldonload();
-    //             }
-    //             func();
-    //         }
-    //     }
-    // }
-
 });
