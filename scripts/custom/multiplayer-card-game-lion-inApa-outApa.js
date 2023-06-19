@@ -193,7 +193,7 @@ $(document).ready(function(){
     var entries;
 
     // Number of trials in the experiment
-    const numTrials = 2; // Learning phase [ATTENTION: CHANGE ACCORDINGLY]
+    const numTrials = 63; // Learning phase [ATTENTION: CHANGE ACCORDINGLY]
     const numTrialsTP = 21; // Test phase [ATTENTION: CHANGE ACCORDINGLY]
 
     // Timestamps when the empathy learning task started
@@ -228,6 +228,9 @@ $(document).ready(function(){
     var clickTimeEmojiChoiceIngroup; 
     var startTimeEmojiChoiceOutgroup;
     var clickTimeEmojiChoiceOutgroup; 
+
+    // Outcome message needs to be saved as a global variable in order to use it across functions
+    var outcomeMessage;
 
     // Timestamp needed to calculate duration
     var startTask = Date.now();
@@ -543,7 +546,6 @@ $(document).ready(function(){
                     var prolificIDMatch = [].concat(... new Array(84).fill(capturedProlificIDMatch));
                     dataELT.prolificIDMatch = prolificIDMatch; 
 
-                    //console.log(dataELT);
                     groupMembership(); 
                 };
             };
@@ -1180,7 +1182,6 @@ $(document).ready(function(){
 
         // Random number from 0 to 1 will determine the outcome
         var randPosition = Math.random();
-        var outcomeMessage;
 
         // Randomly select a computer outcome
         cardSelectorComp = randomIntFromInterval(1, 13);
@@ -1298,7 +1299,7 @@ $(document).ready(function(){
         CreateDiv('sectionMiddle', 'emotionalReactionsPrompt');
         CreateDiv('sectionBottom', 'emotionalReactions');
 
-        var emojiReaction = "<p class = 'textInstructions' id = 'emojiPrompt'>How do you feel because of this player's outcome?</p>";
+        var emojiReaction = "<p class = 'textInstructions' id = 'emojiPrompt'>How do <span class = 'individualWords'>you</span> feel because of this player's outcome?</p>";
 
         $('#emotionalReactionsPrompt').html(emojiReaction);
         $('#emotionalReactionsPrompt').show();
@@ -1519,7 +1520,6 @@ $(document).ready(function(){
         $('#valence2').click(function() {
             if(!event.detail || event.detail == 1){
                 clickTimeEmojiChoiceIngroup = new Date().getTime();
-                clickTimeEmojiChoiceIngroup = new Date().getTime();
                 specificParticipantReactionIngroupRT = calculateRT(startTimeEmojiChoiceIngroup, clickTimeEmojiChoiceIngroup);
                 specificParticipantReactionIngroup = image_id_map["valence2"];
                 participantReactionsPublicIngroup.push(specificParticipantReactionIngroup);
@@ -1571,7 +1571,6 @@ $(document).ready(function(){
 
         $('#valence3').click(function() {
             if(!event.detail || event.detail == 1){
-                clickTimeEmojiChoiceIngroup = new Date().getTime();
                 clickTimeEmojiChoiceIngroup = new Date().getTime();
                 specificParticipantReactionIngroupRT = calculateRT(startTimeEmojiChoiceIngroup, clickTimeEmojiChoiceIngroup);
                 specificParticipantReactionIngroup = image_id_map["valence3"];
@@ -1733,7 +1732,7 @@ $(document).ready(function(){
             if(!event.detail || event.detail == 1){
                     clickTimeEmojiChoiceOutgroup = new Date().getTime();
                     specificParticipantReactionOutgroupRT = calculateRT(startTimeEmojiChoiceOutgroup, clickTimeEmojiChoiceOutgroup);
-                    specificParticipantReactionOutgroup = image_id_map["valence1"];
+                    specificParticipantReactionOutgroup = image_id_map["valence2"];
                     participantReactionsPublicOutgroup.push(specificParticipantReactionOutgroup);
                     participantReactionsPublicOutgroupRT.push(specificParticipantReactionOutgroupRT);
     
@@ -1786,7 +1785,7 @@ $(document).ready(function(){
             if(!event.detail || event.detail == 1){
                 clickTimeEmojiChoiceOutgroup = new Date().getTime();
                 specificParticipantReactionOutgroupRT = calculateRT(startTimeEmojiChoiceOutgroup, clickTimeEmojiChoiceOutgroup);
-                specificParticipantReactionOutgroup = image_id_map["valence1"];
+                specificParticipantReactionOutgroup = image_id_map["valence3"];
                 participantReactionsPublicOutgroup.push(specificParticipantReactionOutgroup);
                 participantReactionsPublicOutgroupRT.push(specificParticipantReactionOutgroupRT);
 
@@ -1844,7 +1843,11 @@ $(document).ready(function(){
 
         // Create divs
         CreateDiv('sectionTop', 'oneGroupReactions');
+        CreateDiv('sectionMiddle', 'gameOutcomeMoved');
         CreateDiv('sectionBottom', 'otherGroupReactions');
+
+        // Populate middle div
+        $('#gameOutcomeMoved').html(outcomeMessage);
         
         // Who is displaying the emotion?
         var testTigerPlayerDisplayed = tigerReactionDisplaysShuffled[trialNum - 1];
@@ -2247,6 +2250,7 @@ $(document).ready(function(){
 
         setTimeout(function(){
             $('#oneGroupReactions').fadeOut(500);
+            $('#gameOutcomeMoved').fadeOut(500);
             $('#otherGroupReactions').fadeOut(500);
 
             // Unmark player
@@ -2258,9 +2262,10 @@ $(document).ready(function(){
             setTimeout(function(){
 
                 $('#sectionTop').empty();
-                undimMidScreen();
                 $('#sectionMiddle').empty();
                 $('#sectionBottom').empty();
+
+                undimMidScreen();
 
                 checkToContinue(currentGroupMembership, nextPlayer, nextTrialNum);
             }, 600);
@@ -2402,9 +2407,8 @@ $(document).ready(function(){
 
         displayCanvas();
 
+        // Random number from 0 to 1 will determine the outcome
         var randPosition = Math.random(); 
-
-        var outcomeMessage;
 
         imagePlayerSize = calculateAspectRatioFit(1457, 1457, newCanvas.width / 5, newCanvas.clientHeight);
 
@@ -2502,7 +2506,7 @@ $(document).ready(function(){
         CreateDiv('sectionMiddle', 'emotionalReactionsPrompt');
         CreateDiv('sectionBottom', 'emotionalReactions');
 
-        var emojiReaction = "<p class = 'textInstructions' id = 'emojiPrompt'>How bad/good do you feel because of your outcome? <br> This response will <span class = 'individualWords'>not</span> be shown to other players. </p>";
+        var emojiReaction = "<p class = 'textInstructions' id = 'emojiPrompt'>How do <span class = 'individualWords'>you</span> feel because of your outcome? <br> This response will <span class = 'individualWords'>not</span> be shown to other players. </p>";
 
         $('#emotionalReactionsPrompt').html(emojiReaction);
         $('#emotionalReactionsPrompt').show();
@@ -2535,16 +2539,6 @@ $(document).ready(function(){
 
         $('#emotionalReactions').html(emojiImages);
         $('#emotionalReactions').show();
-
-        // In the first seven trials, waiting to see other players' emojis will last between 2.5 and 4 seconds
-        if (trialNum <= 7) {
-            waitTimeDisplay = randomIntFromInterval(2500, 4000);
-
-        // From the eight trial onwards, waiting to see other players' emojis will last between 1.8 and 3.5 seconds
-        } else if (trialNum > 7) {
-            waitTimeDisplay = randomIntFromInterval(1800, 3500);
-
-        };
         
         // What happens when each of the emojis is clicked?
         $('#valence1').click(function() {
@@ -2553,24 +2547,22 @@ $(document).ready(function(){
                 specificParticipantReactionRT = calculateRT(startTimeEmojiChoiceSelf, clickTimeEmojiChoiceSelf);
                 $('#emotionalReactionsPrompt').empty();
                 $('#emotionalReactions').empty();
-                $('#gameOutcome').fadeOut(500);
                 specificParticipantReaction = image_id_map["valence1"];
                 participantReactionsPublic.push(specificParticipantReaction);
                 participantReactionsPublicRT.push(specificParticipantReactionRT);
                 setTimeout(function() {
                     undimScreen();
-                    displayDelay.push(waitTimeDisplay);
-                    $('#sectionTop').empty();
+
                     $('#sectionMiddle').empty();
                     $('#sectionBottom').empty();
 
                     if(randResponseOrder == "Ingroup first"){
-                        ingroupReactionPredictionParticipant(currentGroupMembership, activePlayer, specificTrialOutcome, trialNum);
+                        ingroupReactionPredictionParticipant(currentGroupMembership, activePlayer, trialNum);
                     } else {
-                        outgroupReactionPredictionParticipant(currentGroupMembership, activePlayer, specificTrialOutcome, trialNum);
+                        outgroupReactionPredictionParticipant(currentGroupMembership, activePlayer, trialNum);
                     };
 
-                }, waitTimeDisplay);
+                }, 500);
             };
         }); 
 
@@ -2580,24 +2572,22 @@ $(document).ready(function(){
                 specificParticipantReactionRT = calculateRT(startTimeEmojiChoiceSelf, clickTimeEmojiChoiceSelf);
                 $('#emotionalReactionsPrompt').empty();
                 $('#emotionalReactions').empty();
-                $('#gameOutcome').fadeOut(500);
                 specificParticipantReaction = image_id_map["valence2"];
                 participantReactionsPublic.push(specificParticipantReaction);
                 participantReactionsPublicRT.push(specificParticipantReactionRT);
                 setTimeout(function() {
                     undimScreen();
-                    displayDelay.push(waitTimeDisplay);
-                    $('#sectionTop').empty();
+
                     $('#sectionMiddle').empty();
                     $('#sectionBottom').empty();
 
                     if(randResponseOrder == "Ingroup first"){
-                        ingroupReactionPredictionParticipant(currentGroupMembership, activePlayer, specificTrialOutcome, trialNum);
+                        ingroupReactionPredictionParticipant(currentGroupMembership, activePlayer, trialNum);
                     } else {
-                        outgroupReactionPredictionParticipant(currentGroupMembership, activePlayer, specificTrialOutcome, trialNum);
+                        outgroupReactionPredictionParticipant(currentGroupMembership, activePlayer, trialNum);
                     };
 
-                }, waitTimeDisplay);
+                }, 500);
             };
         }); 
 
@@ -2607,24 +2597,22 @@ $(document).ready(function(){
                 specificParticipantReactionRT = calculateRT(startTimeEmojiChoiceSelf, clickTimeEmojiChoiceSelf);
                 $('#emotionalReactionsPrompt').empty();
                 $('#emotionalReactions').empty();
-                $('#gameOutcome').fadeOut(500);
                 specificParticipantReaction = image_id_map["valence3"];
                 participantReactionsPublic.push(specificParticipantReaction);
                 participantReactionsPublicRT.push(specificParticipantReactionRT);
                 setTimeout(function() {
                     undimScreen();
-                    displayDelay.push(waitTimeDisplay);
-                    $('#sectionTop').empty();
+
                     $('#sectionMiddle').empty();
                     $('#sectionBottom').empty();
 
                     if(randResponseOrder == "Ingroup first"){
-                        ingroupReactionPredictionParticipant(currentGroupMembership, activePlayer, specificTrialOutcome, trialNum);
+                        ingroupReactionPredictionParticipant(currentGroupMembership, activePlayer, trialNum);
                     } else {
-                        outgroupReactionPredictionParticipant(currentGroupMembership, activePlayer, specificTrialOutcome, trialNum);
+                        outgroupReactionPredictionParticipant(currentGroupMembership, activePlayer, trialNum);
                     };
 
-                }, waitTimeDisplay);
+                }, 500);
             };
         }); 
     };
@@ -2634,14 +2622,427 @@ $(document).ready(function(){
 
     // INGROUP REACTION PREDICTION (PARTICIPANT)
     // TO SAVE: REACTION TIME, RESPONSE
-    function ingroupReactionPredictionParticipant(groupMembership, activePlayer, activePlayerOutcome, trialNum){
+    function ingroupReactionPredictionParticipant(groupMembership, activePlayer, trialNum){
+
+        startTimeEmojiChoiceIngroup = new Date().getTime();
+
+        // First dim screen & hide canvas
+        dimScreen();
+        removeCanvas();
+
+        // Create divs
+        CreateDiv('sectionMiddle', 'emotionalReactionsPrompt');
+        CreateDiv('sectionBottom', 'emotionalReactions');
+
+        // Change how the question is phrased on the basis of participant's group membership
+        if (groupMembership == "Lion") {
+            var emojiReaction = "<p class = 'textInstructions' id = 'emojiPrompt'>How do you think other members of the <span class = 'individualWordsGold'> Lions </span> feel because of your outcome?</p>";
+        } else if (groupMembership == "Tiger") {
+            var emojiReaction = "<p class = 'textInstructions' id = 'emojiPrompt'>How do you think other members of the <span class = 'individualWordsOrange'> Tigers </span> feel because of your outcome?</p>";
+        };
+
+        $('#emotionalReactionsPrompt').html(emojiReaction);
+        $('#emotionalReactionsPrompt').show();
+        
+        // Display emojis (Defined in the beginning)
+        // Note: .show() needs to be included so that you can display the emoji scale on multiple trials without it being deleted by .fadeOut()        
+        emojiImagesSize = calculateAspectRatioFit(527, 508, midDiv.clientWidth / 3, midDiv.clientHeight);
+
+        emojiImages = document.createElement("div");
+        emojiImages.id = "emojiReactions";
+
+        // Specify each individual emoji - Width & height
+        emoji1.width = emojiImagesSize.width;
+        emoji1.height = emojiImagesSize.height;
+
+        emoji2.width = emojiImagesSize.width;
+        emoji2.height = emojiImagesSize.height;
+
+        emoji3.width = emojiImagesSize.width;
+        emoji3.height = emojiImagesSize.height;
+  
+        // Determine which two emojis will be presented as options depending on the outcome
+        if (specificTrialOutcome == "Victory") {
+            emojiImages.appendChild(emoji2);
+            emojiImages.appendChild(emoji3);
+        } else if (specificTrialOutcome == "Loss") {
+            emojiImages.appendChild(emoji1);
+            emojiImages.appendChild(emoji2);
+        };
+
+        $('#emotionalReactions').html(emojiImages);
+        $('#emotionalReactions').show();
+        
+        // What happens when each of the emojis is clicked?
+        $('#valence1').click(function() {
+            if(!event.detail || event.detail == 1){
+                clickTimeEmojiChoiceIngroup = new Date().getTime();
+                specificParticipantReactionIngroupRT = calculateRT(startTimeEmojiChoiceIngroup, clickTimeEmojiChoiceIngroup);
+                specificParticipantReactionIngroup = image_id_map["valence1"];
+                participantReactionsPublicIngroup.push(specificParticipantReactionIngroup);
+                participantReactionsPublicIngroupRT.push(specificParticipantReactionIngroupRT);
+
+                if(randResponseOrder == "Ingroup first"){
+                    $('#emotionalReactionsPrompt').empty();
+                    $('#emotionalReactions').empty();
+                    
+                    setTimeout(function() {
+                        undimScreen();
+
+                        $('#sectionMiddle').empty();
+                        $('#sectionBottom').empty();
+
+                        outgroupReactionPredictionParticipant(currentGroupMembership, activePlayer, trialNum);
+    
+                    }, 500);
+                } else {
+
+                    $('#emotionalReactionsPrompt').empty();
+                    $('#emotionalReactions').empty();
+                    $('#gameOutcome').fadeOut(500);
+
+                    // In the first seven trials, waiting to see other players' emojis will last between 2.5 and 4 seconds
+                    if (trialNum <= 7) {
+                        waitTimeDisplay = randomIntFromInterval(2500, 4000);
+
+                    // From the eight trial onwards, waiting to see other players' emojis will last between 1.8 and 3.5 seconds
+                    } else if (trialNum > 7) {
+                        waitTimeDisplay = randomIntFromInterval(1800, 3500);
+
+                    };
+
+                    setTimeout(function() {
+                        undimScreen();
+                        displayDelay.push(waitTimeDisplay);
+
+                        $('#sectionTop').empty();
+                        $('#sectionMiddle').empty();
+                        $('#sectionBottom').empty();
+
+                        outcomeReactionDisplay(currentGroupMembership, activePlayer, specificTrialOutcome, trialNum);
+    
+                    }, waitTimeDisplay);
+                };
+            };
+        }); 
+
+        $('#valence2').click(function() {
+            if(!event.detail || event.detail == 1){
+                clickTimeEmojiChoiceIngroup = new Date().getTime();
+                specificParticipantReactionIngroupRT = calculateRT(startTimeEmojiChoiceIngroup, clickTimeEmojiChoiceIngroup);
+                specificParticipantReactionIngroup = image_id_map["valence2"];
+                participantReactionsPublicIngroup.push(specificParticipantReactionIngroup);
+                participantReactionsPublicIngroupRT.push(specificParticipantReactionIngroupRT);
+
+                if(randResponseOrder == "Ingroup first"){
+                    $('#emotionalReactionsPrompt').empty();
+                    $('#emotionalReactions').empty();
+
+                    setTimeout(function() {
+                        undimScreen();
+
+                        $('#sectionMiddle').empty();
+                        $('#sectionBottom').empty();
+
+                        outgroupReactionPredictionParticipant(currentGroupMembership, activePlayer, trialNum);
+    
+                    }, 500);
+                } else {
+
+                    $('#emotionalReactionsPrompt').empty();
+                    $('#emotionalReactions').empty();
+                    $('#gameOutcome').fadeOut(500);
+
+                    // In the first seven trials, waiting to see other players' emojis will last between 2.5 and 4 seconds
+                    if (trialNum <= 7) {
+                        waitTimeDisplay = randomIntFromInterval(2500, 4000);
+
+                    // From the eight trial onwards, waiting to see other players' emojis will last between 1.8 and 3.5 seconds
+                    } else if (trialNum > 7) {
+                        waitTimeDisplay = randomIntFromInterval(1800, 3500);
+
+                    };
+
+                    setTimeout(function() {
+                        undimScreen();
+                        displayDelay.push(waitTimeDisplay);
+
+                        $('#sectionTop').empty();
+                        $('#sectionMiddle').empty();
+                        $('#sectionBottom').empty();
+
+                        outcomeReactionDisplay(currentGroupMembership, activePlayer, specificTrialOutcome, trialNum);
+    
+                    }, waitTimeDisplay);
+                };
+            };
+        }); 
+
+        $('#valence3').click(function() {
+            if(!event.detail || event.detail == 1){
+                clickTimeEmojiChoiceIngroup = new Date().getTime();
+                specificParticipantReactionIngroupRT = calculateRT(startTimeEmojiChoiceIngroup, clickTimeEmojiChoiceIngroup);
+                specificParticipantReactionIngroup = image_id_map["valence3"];
+                participantReactionsPublicIngroup.push(specificParticipantReactionIngroup);
+                participantReactionsPublicIngroupRT.push(specificParticipantReactionIngroupRT);
+
+                if(randResponseOrder == "Ingroup first"){
+                    $('#emotionalReactionsPrompt').empty();
+                    $('#emotionalReactions').empty();
+    
+                    setTimeout(function() {
+                        undimScreen();
+
+                        $('#sectionMiddle').empty();
+                        $('#sectionBottom').empty();
+
+                        outgroupReactionPredictionParticipant(currentGroupMembership, activePlayer, trialNum);
+    
+                    }, 500);
+                } else {
+
+                    $('#emotionalReactionsPrompt').empty();
+                    $('#emotionalReactions').empty();
+                    $('#gameOutcome').fadeOut(500);
+
+                    // In the first seven trials, waiting to see other players' emojis will last between 2.5 and 4 seconds
+                    if (trialNum <= 7) {
+                        waitTimeDisplay = randomIntFromInterval(2500, 4000);
+
+                    // From the eight trial onwards, waiting to see other players' emojis will last between 1.8 and 3.5 seconds
+                    } else if (trialNum > 7) {
+                        waitTimeDisplay = randomIntFromInterval(1800, 3500);
+
+                    };
+
+                    setTimeout(function() {
+                        undimScreen();
+                        displayDelay.push(waitTimeDisplay);
+
+                        $('#sectionTop').empty();
+                        $('#sectionMiddle').empty();
+                        $('#sectionBottom').empty();
+
+                        outcomeReactionDisplay(currentGroupMembership, activePlayer, specificTrialOutcome, trialNum);
+    
+                    }, waitTimeDisplay);
+                };
+            };
+        }); 
     };
 
     // OUTGROUP REACTION PREDICTION (PARTICIPANT)
     // TO SAVE: REACTION TIME, RESPONSE
-    function outgroupReactionPredictionParticipant(groupMembership, activePlayer, activePlayerOutcome, trialNum){
-    };
+    function outgroupReactionPredictionParticipant(groupMembership, activePlayer, trialNum){
+        startTimeEmojiChoiceOutgroup = new Date().getTime();
 
+        // First dim screen & hide canvas
+        dimScreen();
+        removeCanvas();
+
+        // Create divs
+        CreateDiv('sectionMiddle', 'emotionalReactionsPrompt');
+        CreateDiv('sectionBottom', 'emotionalReactions');
+
+        // Change how the question is phrased on the basis of participant's group membership
+        if (groupMembership == "Lion") {
+            var emojiReaction = "<p class = 'textInstructions' id = 'emojiPrompt'>How do you think members of the <span class = 'individualWordsOrange'> Tigers </span> feel because of your outcome?</p>";
+        } else if (groupMembership == "Tiger") {
+            var emojiReaction = "<p class = 'textInstructions' id = 'emojiPrompt'>How do you think members of the <span class = 'individualWordsGold'> Lions </span> feel because of your outcome?</p>";
+        };
+
+        $('#emotionalReactionsPrompt').html(emojiReaction);
+        $('#emotionalReactionsPrompt').show();
+        
+        // Display emojis (Defined in the beginning)
+        // Note: .show() needs to be included so that you can display the emoji scale on multiple trials without it being deleted by .fadeOut()        
+        emojiImagesSize = calculateAspectRatioFit(527, 508, midDiv.clientWidth / 3, midDiv.clientHeight);
+
+        emojiImages = document.createElement("div");
+        emojiImages.id = "emojiReactions";
+
+        // Specify each individual emoji - Width & height
+        emoji1.width = emojiImagesSize.width;
+        emoji1.height = emojiImagesSize.height;
+
+        emoji2.width = emojiImagesSize.width;
+        emoji2.height = emojiImagesSize.height;
+
+        emoji3.width = emojiImagesSize.width;
+        emoji3.height = emojiImagesSize.height;
+  
+        // Determine which two emojis will be presented as options depending on the outcome
+        if (specificTrialOutcome == "Victory") {
+            emojiImages.appendChild(emoji2);
+            emojiImages.appendChild(emoji3);
+        } else if (specificTrialOutcome == "Loss") {
+            emojiImages.appendChild(emoji1);
+            emojiImages.appendChild(emoji2);
+        };
+
+        $('#emotionalReactions').html(emojiImages);
+        $('#emotionalReactions').show();
+        
+        // What happens when each of the emojis is clicked?
+        $('#valence1').click(function() {
+            if(!event.detail || event.detail == 1){
+                clickTimeEmojiChoiceOutgroup = new Date().getTime();
+                specificParticipantReactionOutgroupRT = calculateRT(startTimeEmojiChoiceOutgroup, clickTimeEmojiChoiceOutgroup);
+                specificParticipantReactionOutgroup = image_id_map["valence1"];
+                participantReactionsPublicOutgroup.push(specificParticipantReactionOutgroup);
+                participantReactionsPublicOutgroupRT.push(specificParticipantReactionOutgroupRT);
+
+                if(randResponseOrder == "Outgroup first"){
+
+                    $('#emotionalReactionsPrompt').empty();
+                    $('#emotionalReactions').empty();
+
+                    setTimeout(function() {
+                        undimScreen();
+
+                        $('#sectionMiddle').empty();
+                        $('#sectionBottom').empty();
+
+                        ingroupReactionPredictionParticipant(currentGroupMembership, activePlayer, trialNum);
+    
+                    }, 500);
+                } else {
+
+                    $('#emotionalReactionsPrompt').empty();
+                    $('#emotionalReactions').empty();
+                    $('#gameOutcome').fadeOut(500);
+
+                    // In the first seven trials, waiting to see other players' emojis will last between 2.5 and 4 seconds
+                    if (trialNum <= 7) {
+                        waitTimeDisplay = randomIntFromInterval(2500, 4000);
+
+                    // From the eight trial onwards, waiting to see other players' emojis will last between 1.8 and 3.5 seconds
+                    } else if (trialNum > 7) {
+                        waitTimeDisplay = randomIntFromInterval(1800, 3500);
+
+                    };
+
+                    setTimeout(function() {
+                        undimScreen();
+                        displayDelay.push(waitTimeDisplay);
+
+                        $('#sectionTop').empty();
+                        $('#sectionMiddle').empty();
+                        $('#sectionBottom').empty();
+
+                        outcomeReactionDisplay(currentGroupMembership, activePlayer, specificTrialOutcome, trialNum);
+    
+                    }, waitTimeDisplay);
+                };
+            };
+        }); 
+
+        $('#valence2').click(function() {
+            if(!event.detail || event.detail == 1){
+                    clickTimeEmojiChoiceOutgroup = new Date().getTime();
+                    specificParticipantReactionOutgroupRT = calculateRT(startTimeEmojiChoiceOutgroup, clickTimeEmojiChoiceOutgroup);
+                    specificParticipantReactionOutgroup = image_id_map["valence2"];
+                    participantReactionsPublicOutgroup.push(specificParticipantReactionOutgroup);
+                    participantReactionsPublicOutgroupRT.push(specificParticipantReactionOutgroupRT);
+    
+                    if(randResponseOrder == "Outgroup first"){
+
+                        $('#emotionalReactionsPrompt').empty();
+                        $('#emotionalReactions').empty();
+
+                        setTimeout(function() {
+                            undimScreen();
+
+                            $('#sectionMiddle').empty();
+                            $('#sectionBottom').empty();
+    
+                            ingroupReactionPredictionParticipant(currentGroupMembership, activePlayer, trialNum);
+        
+                        }, 500);
+                    } else {
+
+                        $('#emotionalReactionsPrompt').empty();
+                        $('#emotionalReactions').empty();
+                        $('#gameOutcome').fadeOut(500);
+    
+                        // In the first seven trials, waiting to see other players' emojis will last between 2.5 and 4 seconds
+                        if (trialNum <= 7) {
+                            waitTimeDisplay = randomIntFromInterval(2500, 4000);
+    
+                        // From the eight trial onwards, waiting to see other players' emojis will last between 1.8 and 3.5 seconds
+                        } else if (trialNum > 7) {
+                            waitTimeDisplay = randomIntFromInterval(1800, 3500);
+    
+                        };
+    
+                        setTimeout(function() {
+                            undimScreen();
+                            displayDelay.push(waitTimeDisplay);
+    
+                            $('#sectionTop').empty();
+                            $('#sectionMiddle').empty();
+                            $('#sectionBottom').empty();
+    
+                            outcomeReactionDisplay(currentGroupMembership, activePlayer, specificTrialOutcome, trialNum);
+        
+                        }, waitTimeDisplay);
+                    };
+            };
+        }); 
+
+        $('#valence3').click(function() {
+            if(!event.detail || event.detail == 1){
+                clickTimeEmojiChoiceOutgroup = new Date().getTime();
+                specificParticipantReactionOutgroupRT = calculateRT(startTimeEmojiChoiceOutgroup, clickTimeEmojiChoiceOutgroup);
+                specificParticipantReactionOutgroup = image_id_map["valence3"];
+                participantReactionsPublicOutgroup.push(specificParticipantReactionOutgroup);
+                participantReactionsPublicOutgroupRT.push(specificParticipantReactionOutgroupRT);
+
+                if(randResponseOrder == "Outgroup first"){
+
+                    $('#emotionalReactionsPrompt').empty();
+                    $('#emotionalReactions').empty();
+
+                    setTimeout(function() {
+                        undimScreen();
+
+                        $('#sectionMiddle').empty();
+                        $('#sectionBottom').empty();
+
+                        ingroupReactionPredictionParticipant(currentGroupMembership, activePlayer, trialNum);
+    
+                    }, 500);
+                } else {
+
+                    $('#emotionalReactionsPrompt').empty();
+                    $('#emotionalReactions').empty();
+                    $('#gameOutcome').fadeOut(500);
+
+                    // In the first seven trials, waiting to see other players' emojis will last between 2.5 and 4 seconds
+                    if (trialNum <= 7) {
+                        waitTimeDisplay = randomIntFromInterval(2500, 4000);
+
+                    // From the eight trial onwards, waiting to see other players' emojis will last between 1.8 and 3.5 seconds
+                    } else if (trialNum > 7) {
+                        waitTimeDisplay = randomIntFromInterval(1800, 3500);
+
+                    };
+
+                    setTimeout(function() {
+                        undimScreen();
+                        displayDelay.push(waitTimeDisplay);
+
+                        $('#sectionTop').empty();
+                        $('#sectionMiddle').empty();
+                        $('#sectionBottom').empty();
+
+                        outcomeReactionDisplay(currentGroupMembership, activePlayer, specificTrialOutcome, trialNum);
+    
+                    }, waitTimeDisplay);
+                };
+            };
+        }); 
+    };
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -3282,8 +3683,6 @@ $(document).ready(function(){
     // GAME OUTCOME (OTHER INGROUP AND OUTGROUP PARTICIPANTS)
     // TO SAVE: ACTIVE PLAYER, TRIAL NUMBER, TRIAL OUTCOME (LOSS/VICTORY), TRIAL OUTCOME RT, COMPUTER & PLAYER NUMBERS, BLOCK
     function gameOutcomeNotParticipantTP(activePlayer, trialNumTP) {
-
-        var outcomeMessage;
 
         // Randomly select a computer outcome
         cardSelectorComp = randomIntFromInterval(1, 13);
@@ -3972,8 +4371,6 @@ $(document).ready(function(){
     function gameOutcomeParticipantTP(activePlayer, trialNumTP) {
 
         displayCanvas();
-
-        var outcomeMessage;
 
         // Adjust image size to the canvas
         imagePlayerSize = calculateAspectRatioFit(1457, 1457, newCanvas.width / 5, newCanvas.clientHeight);
