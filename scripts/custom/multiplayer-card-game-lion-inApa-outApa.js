@@ -194,7 +194,7 @@ $(document).ready(function(){
     var entries;
 
     // Number of trials in the experiment
-    const numTrials = 1; // Learning phase [ATTENTION: CHANGE ACCORDINGLY]
+    const numTrials = 10; // Learning phase [ATTENTION: CHANGE ACCORDINGLY]
     const numTrialsTP = 10; // Test phase [ATTENTION: CHANGE ACCORDINGLY]
 
     // Timestamps when the empathy learning task started
@@ -593,7 +593,7 @@ $(document).ready(function(){
     // TO SAVE: NOTHING
     function Instructions(pageNum){
 
-        var numPages = 7;
+        var numPages = 8;
 
         CreateDiv('sectionVeryTop', 'title');
         CreateDiv('sectionTop', 'informationPart1');
@@ -610,7 +610,7 @@ $(document).ready(function(){
 
             case 1:
                 computerImageInstructionsSize = calculateAspectRatioFit(1457, 1457, midDiv.clientWidth, midDiv.clientHeight);
-                var titleText = "<p class = 'textIntro'><span class = 'individualWords'>Instructions (1/5)<span></p>";
+                var titleText = "<p class = 'textIntro'><span class = 'individualWords'>Instructions (1/6)<span></p>";
                 var Info = '<p class = "textInstructions">You will play a <span class = "individualWords">card game </span> with other participants in <span class = "individualWords">real time</span>. Some participants will be members of <span class = "individualWords"> your (Lions) group </span> and some will be members of the <span class = "individualWords"> other (Tigers) group</span>. You will play the card game against this <span class = "individualWords">robot</span> our research team programmed. </p>';
                 dinosaurImage.width =  computerImageInstructionsSize.width;
                 dinosaurImage.height = computerImageInstructionsSize.height;
@@ -619,7 +619,7 @@ $(document).ready(function(){
 
             case 2:
                 gameImageInstructionsSize = calculateAspectRatioFit(3368, 559, midDiv.clientWidth, midDiv.clientHeight);
-                var titleText = "<p class = 'textIntro'><span class = 'individualWords'>Instructions (2/5)<span></p>";;
+                var titleText = "<p class = 'textIntro'><span class = 'individualWords'>Instructions (2/6)<span></p>";;
                 var Info = "<p class = 'textInstructions'>In each round, the active player will select one of the four cards, which can have a <span class = 'individualWords'>value from 1 to 15</span>. Once the player has selected their card, the robot will select one of the remaining cards. If the player's card has a higher value than the robot's card, they <span class = 'individualWords'>win</span>. If the player's card has a lower value, they <span class = 'individualWords'>lose</span>. </p>";
                 gameTrialInstructions.width = gameImageInstructionsSize.width;
                 gameTrialInstructions.height = gameImageInstructionsSize.height;
@@ -628,7 +628,7 @@ $(document).ready(function(){
 
             case 3:
                 cardImageInstructionsSize = calculateAspectRatioFit(1152, 282, midDiv.clientWidth, midDiv.clientHeight);
-                var titleText = "<p class = 'textIntro'><span class = 'individualWords'>Instructions (3/5)<span></p>";;
+                var titleText = "<p class = 'textIntro'><span class = 'individualWords'>Instructions (3/6)<span></p>";;
                 var Info = "<p class = 'textInstructions'> These are the cards you will select from when it is your turn to play. You won't know the cards' potential values in advance, but know that they aren't random. There is a rule that governs the cards' values and your task is to <span class = 'individualWords'>work it out and win as often as possible</span>. Your <span class = 'individualWords'>individual</span> game score will determine your <span class = 'individualWords'>bonus payment</span> at the end of the experiment.</p>";
                 cardSelectionInstructions.width = cardImageInstructionsSize.width;
                 cardSelectionInstructions.height = cardImageInstructionsSize.height;
@@ -637,32 +637,41 @@ $(document).ready(function(){
 
             case 4:
                 emojiImageInstructionsSize = calculateAspectRatioFit(6169, 1145, midDiv.clientWidth, midDiv.clientHeight);
-                var titleText = "<p class = 'textIntro'><span class = 'individualWords'>Instructions (4/5)<span></p>";;
-                var Info = "<p class = 'textInstructions'> After you find out about your own or another player's outcome, you will be able to <span class = 'individualWords'>express how bad or good you feel about it by clicking on one of the emojis below</span>. These emojis will be the only communication you and the other players will have in the game. </p>";
+                var titleText = "<p class = 'textIntro'><span class = 'individualWords'>Instructions (4/6)<span></p>";;
+                var Info = "<p class = 'textInstructions'> After you find out about your own or another player's outcome, you will be able to <span class = 'individualWords'>express how you feel about it by clicking on one of the emojis below</span>. These emojis will be the only communication you and the other players will have in the game. </p>";
                 emojiSelectionInstructions.width = emojiImageInstructionsSize.width;
                 emojiSelectionInstructions.height = emojiImageInstructionsSize.height;
                 var Info2 = emojiSelectionInstructions;
                 break;
 
             case 5:
+                    emotionalReactionsImageInstructionsSize = calculateAspectRatioFit(3382, 2658, midDiv.clientWidth, midDiv.clientHeight);
+                    var titleText = "<p class = 'textIntro'><span class = 'individualWords'>Instructions (5/6)<span></p>";
+                    var Info = "<p class = 'textInstructions'> After choosing an emoji which reflects how <span class = 'individualWords'>you</span> feel, you will be asked to <span class = 'individualWords'>predict how other members of the Lions and the Tigers feel</span> in response to the same outcome. You will make your predictions by clicking on one of the emojis below.</p>";
+                    emojiSelectionInstructions.width = emojiImageInstructionsSize.width;
+                    emojiSelectionInstructions.height = emojiImageInstructionsSize.height;
+                    var Info2 = emojiSelectionInstructions;
+            break;
+
+            case 6:
                 emotionalReactionsImageInstructionsSize = calculateAspectRatioFit(3382, 2658, midDiv.clientWidth, midDiv.clientHeight);
-                var titleText = "<p class = 'textIntro'><span class = 'individualWords'>Instructions (5/5)<span></p>";
-                var Info = "<p class = 'textInstructions'> After you choose an emoji, you will see the emojis of two other players - <span class = 'individualWords'>one member of the Lions and one member of the Tigers</span>. Same as you will see other player's reactions, <span class = 'individualWords'>at least one member of the Lions and one member of the Tigers will see your reaction</span>.</p>";
+                var titleText = "<p class = 'textIntro'><span class = 'individualWords'>Instructions (6/6)<span></p>";
+                var Info = "<p class = 'textInstructions'> After you make your predictions, you will be able to compare them to the emojis selected by two other players - <span class = 'individualWords'>one member of the Lions and one member of the Tigers</span>. Same as you will see other player's reactions, <span class = 'individualWords'>at least one member of the Lions and one member of the Tigers will see your reaction</span> (but not your predictions of their reactions).</p>";
                 emojiDisplayInstructions.width = emotionalReactionsImageInstructionsSize.width;
                 emojiDisplayInstructions.height = emotionalReactionsImageInstructionsSize.height;
                 var Info2 = emojiDisplayInstructions;
                 break;
 
-            case 6:
+            case 7:
                 var titleText = "<p class = 'textIntro'><span class = 'individualWords'>If you don't understand this recap, please re-read the full instructions<span>.</p>";
-                var Info = "<p class = 'textInstructions'> You will play a card game with other participants against a robot. The goal is to work out the rule governing the cards' values and win as often as possible since <span class = 'individualWords'>your individual game score will determine your Prolific bonus</span>.</p>";
-                var Info2 = "<p class = 'textInstructions'> You will be asked to select an emoji reaction after each player's outcome which should reflect how you feel about the outcome. <span class = 'individualWords'>Your chosen emoji will be shown to one member of your (Lions) group and one member of the other (Tigers) group</span>. Similarly, <span class = 'individualWords'>in each round, you will see the emojis selected by two other players</span>.</p>";
+                var Info = "<p class = 'textInstructions'> You will play a card game with other participants against a robot. The goal is identify the rule governing the cards' values and win as often as possible to <span class = 'individualWords'>boost your individual Prolific bonus</span>.</p>";
+                var Info2 = "<p class = 'textInstructions'> After each player's outcome, you will be asked (a) to select an emoji reflecting how you feel about the outcome, and (b) to predict reactions of other members of the Lions and the Tigers to the same outcome. <span class = 'individualWords'>Your own emoji will be shown to one member of each group</span>. Similarly, <span class = 'individualWords'>in each round, you will see the emojis selected by two other players</span>.</p>";
                 break;   
 
-            case 7:
+            case 8:
                 var titleText;
                 var Info = '<p class = "textIntro"> When you are ready, enter the game waiting room by clicking on the button <span class = "individualWords">Enter</span>.</p>';
-                var Info2 = "<p class = 'textIntro'> In addition to paying attention to the cards, <span class = 'individualWords'>pay attention to other players' emoji reactions</span> since we will ask you a few questions about them later.</p>";
+                var Info2 = "<p class = 'textIntro'> In addition to paying attention to the cards, <span class = 'individualWords'>pay attention to other players' emoji reactions</span>.</p>";
                 break;
         };
 
@@ -4654,7 +4663,7 @@ $(document).ready(function(){
 
             cardSelectionInstructions.src = "assets/fourCardsInstruction.png"; 
 
-            emojiSelectionInstructions.src = "assets/valenceScaleText.png";
+            emojiSelectionInstructions.src = "assets/valenceScale.png";
 
             emojiDisplayInstructions.src = "assets/emotionalReactions.png";
 
