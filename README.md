@@ -6,4 +6,4 @@ The revised version of ELT attempts to mimic learning of intergroup empathic nor
 
 General outline of the revised version of ELT:
 
-[To be uploaded]
+![ELT]("ELT revised_Outline.png")
