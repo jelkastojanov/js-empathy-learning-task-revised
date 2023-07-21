@@ -173,7 +173,8 @@ $(document).ready(function(){
     ////////// PRE-EXISTING INFORMATION //////////
 
     // INSTRUCTIONS
-    var firstVisit = true;
+    var nextInstructionsEverShown = false;
+    var timerId = null;
 
     // DICTIONARIES
 
@@ -679,7 +680,7 @@ $(document).ready(function(){
                 break;    
 
             case 8:
-                var titleText = "<p class = 'textIntro'><span class = 'individualWords'>If you don't understand this recap, please re-read the full instructions<span>.</p>";
+                var titleText = "<p class = 'textIntro'><span class = 'individualWords'>If you don't understand this recap, please re-read the full instructions. The 'Next' button is temporarily blocked to make sure you read the information.<span></p>";
                 var Info = "<p class = 'textInstructions'> You will play a card game against a robot. The goal is identify the rule governing the cards' values and win as often as possible to <span class = 'individualWords'>boost your individual Prolific bonus</span>. Other participants will also play the game, but <span class = 'individualWords'>their outcomes will have no effect on your Prolific bonus</span>.</p>";
                 var Info2 = "<p class = 'textInstructions'> After another player's outcome is known, you will be asked (a) to predict feelings of other members of the Lions and the Tigers about this outcome, and (b) to select an emoji reflecting how you feel about the same outcome. <span class = 'individualWords'>Your own emoji will be shown to one member of each group</span>. Similarly, <span class = 'individualWords'>you will see the emojis selected by two other players</span>.</p>";
                 break;   
@@ -717,16 +718,16 @@ $(document).ready(function(){
         };
 
         if (pageNum == 8) {
-            if (firstVisit == true) {
 
-                firstVisit = false;
+            if (!nextInstructionsEverShown) {
 
                 $('#nextInstructions').hide();
-
-                setTimeout(function(){
+        
+                timerId = setTimeout(function(){
+                    nextInstructionsEverShown = true;
                     $('#nextInstructions').show();
-                }, 8000);
-
+                }, 12000); 
+        
             } else {
                 $('#nextInstructions').show();
             };
@@ -739,6 +740,9 @@ $(document).ready(function(){
         // What happens when each of the buttons is clicked?
         $('#backInstructions').click(function() {
             if(!event.detail || event.detail == 1){
+                if (timerId !== null) {
+                    clearTimeout(timerId);
+                };
                 $('#sectionVeryTop').empty();
                 $('#sectionTop').empty();
                 $('#sectionMiddle').empty();
@@ -4932,7 +4936,7 @@ $(document).ready(function(){
             tigerPlayer3.src = "assets/activePlayerTiger3.png";
             tigerPlayer3.id = "tigerPlayer3ID";
 
-            tigerPlayer4.src = "assets/activePlayerTiger.png";
+            tigerPlayer4.src = "assets/inactivePlayerTiger.png";
             tigerPlayer4.id = "tigerPlayer4ID";
 
             // Ingroup players - Test phase
