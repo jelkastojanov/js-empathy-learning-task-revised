@@ -8,15 +8,29 @@ $(document).ready(function(){
     // What needs to be changed in different versions of the task?
 
     // 1. CONDITION: Variable currentExperimentalCondition should be changed to reflect the experimental condition in the title.
-    // 2. GROUP: Variable currentGroupMembership should be changed to reflect the group membership of the participant.
-    // 3. GROUP: Variable imageGroup should be changed to reflect the group membership of the participant (in the preloader function).
-    // 4. GROUP: Group membership prompt and the button text need to be changed to reflect the group membership of the participant (in the groupMembership function).
-    // 5. GROUP: Variables tigerPlayer1-4 and lionPlayer1-4 should be changed to reflect the group membership of the participant (in the preloader function).
-    // 6. GROUP: Text needs to be changed in the instructions to reflect the group membership of the participant.
+    // 2. GROUP: Variable currentGroupMembership should be changed to reflect the group membership of the participant. Similarly, variable notCurrentGroupMembership should be changed to reflect the other group.
+    // 3. GROUP: Variable imageGroup should be changed to reflect the group membership of the participant (in the preloader function). [DONE AUTOMATICALLY]
+    // 4. GROUP: Group membership prompt and the button text need to be changed to reflect the group membership of the participant (in the groupMembership function). [DONE AUTOMATICALLY]
+    // 5. GROUP: Variables tigerPlayer1-4 and lionPlayer1-4 should be changed to reflect the group membership of the participant (in the preloader function). [DONE AUTOMATICALLY]
+    // 6. GROUP: Text needs to be changed in the instructions to reflect the group membership of the participant. [DONE AUTOMATICALLY]
     // 7. GROUP: Change Gorilla link at the end.
-    // 8. GROUP: lionPlayer4ID needs to be changed to tigerPlayer4ID in arrays playerOrder and playerOrderTP.
+    // 8. GROUP: lionPlayer4ID needs to be changed to tigerPlayer4ID in arrays playerOrder and playerOrderTP. [DONE AUTOMATICALLY]
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
+
+    // DEFINE VARIABLES THAT CRITICALLY CHANGE THE EXPERIMENT: currentExperimentalCondition & currentGroupMembership
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
+
+    // Experimental condition [ATTENTION: CHANGE ACCORDINGLY]
+    var currentExperimentalCondition = "inApa_outApa";
+
+    // Participant's group membership [ATTENTION: CHANGE ACCORDINGLY]
+    var currentGroupMembership = "Tiger";
+    var notCurrentGroupMembership = "Lion";
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -162,7 +176,11 @@ $(document).ready(function(){
     }
 
     // PRELOAD IMAGES
-    preloader();
+    if (currentGroupMembership == "Lion") {
+        preloaderLion();
+    } else if (currentGroupMembership ==  "Tiger") {
+        preloaderTiger();
+    }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -198,8 +216,8 @@ $(document).ready(function(){
     var entries;
 
     // Number of trials in the experiment
-    const numTrials = 70; // Learning phase [ATTENTION: CHANGE ACCORDINGLY]
-    const numTrialsTP = 21; // Test phase [ATTENTION: CHANGE ACCORDINGLY]
+    const numTrials = 1; // Learning phase [ATTENTION: CHANGE ACCORDINGLY]
+    const numTrialsTP = 1; // Test phase [ATTENTION: CHANGE ACCORDINGLY]
 
     // Timestamps when the empathy learning task started
 
@@ -250,12 +268,6 @@ $(document).ready(function(){
     // var capturedProlificID = "888"; // This is used just for testing
     var capturedProlificID = getUrlVars()['PROLIFIC_PID']; // [ATTENTION: ACTIVATE LATER]
     var typedProlificID;  // Updated later
-
-    // Experimental condition [ATTENTION: CHANGE ACCORDINGLY]
-    var currentExperimentalCondition = "inApa_outApa";
-
-    // Participant's group membership [ATTENTION: CHANGE ACCORDINGLY]
-    var currentGroupMembership = "Lion";
     var capturedProlificIDMatch;  
 
     // What is the order of players in the game?
@@ -264,25 +276,48 @@ $(document).ready(function(){
     var playerOrder;
 
     // Each player appears 
-    var notRandomisedPlayerOrder = ["lionPlayer1ID", "lionPlayer2ID", "lionPlayer3ID", "lionPlayer4ID", "tigerPlayer1ID", "tigerPlayer2ID", "tigerPlayer3ID", 
-    "lionPlayer1ID", "lionPlayer2ID", "lionPlayer3ID", "lionPlayer4ID", "tigerPlayer1ID", "tigerPlayer2ID", "tigerPlayer3ID", 
-    "lionPlayer1ID", "lionPlayer2ID", "lionPlayer3ID", "lionPlayer4ID", "tigerPlayer1ID", "tigerPlayer2ID", "tigerPlayer3ID",
-    "lionPlayer1ID", "lionPlayer2ID", "lionPlayer3ID", "lionPlayer4ID", "tigerPlayer1ID", "tigerPlayer2ID", "tigerPlayer3ID",
-    "lionPlayer1ID", "lionPlayer2ID", "lionPlayer3ID", "lionPlayer4ID", "tigerPlayer1ID", "tigerPlayer2ID", "tigerPlayer3ID",
-    "lionPlayer1ID", "lionPlayer2ID", "lionPlayer3ID", "lionPlayer4ID", "tigerPlayer1ID", "tigerPlayer2ID", "tigerPlayer3ID",
-    "lionPlayer1ID", "lionPlayer2ID", "lionPlayer3ID", "lionPlayer4ID", "tigerPlayer1ID", "tigerPlayer2ID", "tigerPlayer3ID",
-    "lionPlayer1ID", "lionPlayer2ID", "lionPlayer3ID", "lionPlayer4ID", "tigerPlayer1ID", "tigerPlayer2ID", "tigerPlayer3ID",
-    "lionPlayer1ID", "lionPlayer2ID", "lionPlayer3ID", "lionPlayer4ID", "tigerPlayer1ID", "tigerPlayer2ID", "tigerPlayer3ID",
-    "lionPlayer1ID", "lionPlayer2ID", "lionPlayer3ID", "lionPlayer4ID", "tigerPlayer1ID", "tigerPlayer2ID", "tigerPlayer3ID"];
+    var notRandomisedPlayerOrder;
+    
+    if (currentGroupMembership == "Lion") {
+        notRandomisedPlayerOrder = ["lionPlayer1ID", "lionPlayer2ID", "lionPlayer3ID", "lionPlayer4ID", "tigerPlayer1ID", "tigerPlayer2ID", "tigerPlayer3ID", 
+        "lionPlayer1ID", "lionPlayer2ID", "lionPlayer3ID", "lionPlayer4ID", "tigerPlayer1ID", "tigerPlayer2ID", "tigerPlayer3ID", 
+        "lionPlayer1ID", "lionPlayer2ID", "lionPlayer3ID", "lionPlayer4ID", "tigerPlayer1ID", "tigerPlayer2ID", "tigerPlayer3ID",
+        "lionPlayer1ID", "lionPlayer2ID", "lionPlayer3ID", "lionPlayer4ID", "tigerPlayer1ID", "tigerPlayer2ID", "tigerPlayer3ID",
+        "lionPlayer1ID", "lionPlayer2ID", "lionPlayer3ID", "lionPlayer4ID", "tigerPlayer1ID", "tigerPlayer2ID", "tigerPlayer3ID",
+        "lionPlayer1ID", "lionPlayer2ID", "lionPlayer3ID", "lionPlayer4ID", "tigerPlayer1ID", "tigerPlayer2ID", "tigerPlayer3ID",
+        "lionPlayer1ID", "lionPlayer2ID", "lionPlayer3ID", "lionPlayer4ID", "tigerPlayer1ID", "tigerPlayer2ID", "tigerPlayer3ID",
+        "lionPlayer1ID", "lionPlayer2ID", "lionPlayer3ID", "lionPlayer4ID", "tigerPlayer1ID", "tigerPlayer2ID", "tigerPlayer3ID",
+        "lionPlayer1ID", "lionPlayer2ID", "lionPlayer3ID", "lionPlayer4ID", "tigerPlayer1ID", "tigerPlayer2ID", "tigerPlayer3ID",
+        "lionPlayer1ID", "lionPlayer2ID", "lionPlayer3ID", "lionPlayer4ID", "tigerPlayer1ID", "tigerPlayer2ID", "tigerPlayer3ID"];
+    } else if (currentGroupMembership == "Tiger") {
+        notRandomisedPlayerOrder = ["lionPlayer1ID", "lionPlayer2ID", "lionPlayer3ID", "tigerPlayer1ID", "tigerPlayer2ID", "tigerPlayer3ID", "tigerPlayer4ID", 
+        "lionPlayer1ID", "lionPlayer2ID", "lionPlayer3ID", "tigerPlayer1ID", "tigerPlayer2ID", "tigerPlayer3ID", "tigerPlayer4ID",
+        "lionPlayer1ID", "lionPlayer2ID", "lionPlayer3ID", "tigerPlayer1ID", "tigerPlayer2ID", "tigerPlayer3ID", "tigerPlayer4ID",
+        "lionPlayer1ID", "lionPlayer2ID", "lionPlayer3ID", "tigerPlayer1ID", "tigerPlayer2ID", "tigerPlayer3ID", "tigerPlayer4ID",
+        "lionPlayer1ID", "lionPlayer2ID", "lionPlayer3ID", "tigerPlayer1ID", "tigerPlayer2ID", "tigerPlayer3ID", "tigerPlayer4ID",
+        "lionPlayer1ID", "lionPlayer2ID", "lionPlayer3ID", "tigerPlayer1ID", "tigerPlayer2ID", "tigerPlayer3ID", "tigerPlayer4ID",
+        "lionPlayer1ID", "lionPlayer2ID", "lionPlayer3ID", "tigerPlayer1ID", "tigerPlayer2ID", "tigerPlayer3ID", "tigerPlayer4ID",
+        "lionPlayer1ID", "lionPlayer2ID", "lionPlayer3ID", "tigerPlayer1ID", "tigerPlayer2ID", "tigerPlayer3ID", "tigerPlayer4ID",
+        "lionPlayer1ID", "lionPlayer2ID", "lionPlayer3ID", "tigerPlayer1ID", "tigerPlayer2ID", "tigerPlayer3ID", "tigerPlayer4ID",
+        "lionPlayer1ID", "lionPlayer2ID", "lionPlayer3ID", "tigerPlayer1ID", "tigerPlayer2ID", "tigerPlayer3ID", "tigerPlayer4ID"];       
+    }
 
     playerOrder = shuffle(notRandomisedPlayerOrder);
 
     // Test phase [ATTENTION: CHANGE ACCORDINGLY!]
     var playerOrderTP;
 
-    var notRandomisedPlayerOrderTP = ["lionPlayer1TPID", "lionPlayer2TPID", "lionPlayer3TPID", "lionPlayer4TPID", "tigerPlayer1TPID", "tigerPlayer2TPID", "tigerPlayer3TPID", 
-    "lionPlayer1TPID", "lionPlayer2TPID", "lionPlayer3TPID", "lionPlayer4TPID", "tigerPlayer1TPID", "tigerPlayer2TPID", "tigerPlayer3TPID",
-    "lionPlayer1TPID", "lionPlayer2TPID", "lionPlayer3TPID", "lionPlayer4TPID", "tigerPlayer1TPID", "tigerPlayer2TPID", "tigerPlayer3TPID"];
+    var notRandomisedPlayerOrderTP;
+
+    if (currentGroupMembership == "Lion") {
+        notRandomisedPlayerOrderTP = ["lionPlayer1TPID", "lionPlayer2TPID", "lionPlayer3TPID", "lionPlayer4TPID", "tigerPlayer1TPID", "tigerPlayer2TPID", "tigerPlayer3TPID", 
+        "lionPlayer1TPID", "lionPlayer2TPID", "lionPlayer3TPID", "lionPlayer4TPID", "tigerPlayer1TPID", "tigerPlayer2TPID", "tigerPlayer3TPID",
+        "lionPlayer1TPID", "lionPlayer2TPID", "lionPlayer3TPID", "lionPlayer4TPID", "tigerPlayer1TPID", "tigerPlayer2TPID", "tigerPlayer3TPID"];
+    } else if (currentGroupMembership == "Tiger") {
+        notRandomisedPlayerOrderTP = ["lionPlayer1TPID", "lionPlayer2TPID", "lionPlayer3TPID", "tigerPlayer1TPID", "tigerPlayer2TPID", "tigerPlayer3TPID", "tigerPlayer4TPID",
+        "lionPlayer1TPID", "lionPlayer2TPID", "lionPlayer3TPID", "tigerPlayer1TPID", "tigerPlayer2TPID", "tigerPlayer3TPID", "tigerPlayer4TPID",
+        "lionPlayer1TPID", "lionPlayer2TPID", "lionPlayer3TPID", "tigerPlayer1TPID", "tigerPlayer2TPID", "tigerPlayer3TPID", "tigerPlayer4TPID"];
+    }
 
     playerOrderTP = shuffle(notRandomisedPlayerOrderTP);
 
@@ -568,8 +603,11 @@ $(document).ready(function(){
         CreateDiv('sectionMiddle', 'imageGroupMembership');
         CreateDiv('sectionBottom', 'buttonSection');
 
+        // Decide class based on group
+        var groupClass = currentGroupMembership === "Tiger" ? "individualWordsOrange" : "individualWordsGold";
+
         // Group prompt
-        var groupPrompt = '<p class = "textInstructions"> You were assigned to the <span class = "individualWordsGold"> Lions</span>. <br> Please acknowledge your group membership before proceeding.</p>'
+        var groupPrompt = '<p class = "textInstructions"> You were assigned to the <span class = "' + groupClass + '"> ' + currentGroupMembership + 's</span>. <br> Please acknowledge your group membership before proceeding.</p>'
         $('#groupMembershipPrompt').html(groupPrompt);
 
         // Recalculate the size of the group image so that it fits the space you have available
@@ -581,7 +619,7 @@ $(document).ready(function(){
 
         // Acknowledgement button
         var nextButton = document.createElement("BUTTON");
-        nextButton.innerHTML = "I acknowledge that I am a member of the Lions.";
+        nextButton.innerHTML = "I acknowledge that I am a member of the " + currentGroupMembership + "s.";
         nextButton.className = "acknowledgementButtons";
         nextButton.id = "toInstructions1";
         $('#buttonSection').html(nextButton);
@@ -619,7 +657,7 @@ $(document).ready(function(){
             case 1:
                 computerImageInstructionsSize = calculateAspectRatioFit(1457, 1457, midDiv.clientWidth, midDiv.clientHeight);
                 var titleText = "<p class = 'textIntro'><span class = 'individualWords'>Instructions (1/7)<span></p>";
-                var Info = '<p class = "textInstructions">You will play a <span class = "individualWords">card game </span> with other participants in <span class = "individualWords">real time</span>. Some participants will be members of <span class = "individualWords"> your (Lions) group </span> and some will be members of the <span class = "individualWords"> other (Tigers) group</span>. You will play the card game against this <span class = "individualWords">robot</span> our research team programmed. </p>';
+                var Info = '<p class = "textInstructions">You will play a <span class = "individualWords">card game </span> with other participants in <span class = "individualWords">real time</span>. Some participants will be members of <span class = "individualWords"> your (' + currentGroupMembership + 's) group </span> and some will be members of the <span class = "individualWords"> other (' + notCurrentGroupMembership + 's) group</span>. You will play the card game against this <span class = "individualWords">robot</span> our research team programmed. </p>';
                 dinosaurImage.width =  computerImageInstructionsSize.width;
                 dinosaurImage.height = computerImageInstructionsSize.height;
                 var Info2 = dinosaurImage;
@@ -680,7 +718,7 @@ $(document).ready(function(){
                 break;    
 
             case 8:
-                var titleText = "<p class = 'textIntro'><span class = 'individualWords'>If you don't understand this recap, please re-read the full instructions. The Next button is temporarily blocked to make sure you read the information.<span></p>";
+                var titleText = "<p class = 'textIntro'><span class = 'individualWords'>If you don't understand this recap, please re-read the full instructions. The Next button is temporarily disabled to make sure you read the information.<span></p>";
                 var Info = "<p class = 'textInstructions'> You will play a card game against a robot. The goal is identify the rule governing the cards' values and win as often as possible to <span class = 'individualWords'>boost your individual Prolific bonus</span>. Other participants will also play the game, but <span class = 'individualWords'>their outcomes will have no effect on your Prolific bonus</span>.</p>";
                 var Info2 = "<p class = 'textInstructions'> After another player's outcome is known, you will be asked (a) to predict feelings of other members of the Lions and the Tigers about this outcome, and (b) to select an emoji reflecting how you feel about the same outcome. <span class = 'individualWords'>Your own emoji will be shown to one member of each group</span>. Similarly, <span class = 'individualWords'>you will see the emojis selected by two other players</span>.</p>";
                 break;   
@@ -3589,7 +3627,7 @@ $(document).ready(function(){
             lionPlayer3TP.height = playerImagesSizeTP.height;
             lionPlayer3TP.className = "outgroupPlayersClass";
 
-            lionPlayer4TP.width = pplayerImagesSizeTP.width;
+            lionPlayer4TP.width = playerImagesSizeTP.width;
             lionPlayer4TP.height = playerImagesSizeTP.height;
             lionPlayer4TP.className = "outgroupPlayersClass";
 
@@ -4892,8 +4930,8 @@ $(document).ready(function(){
         return newInput.map(row => row.join('|')).join('\n')
     };
 
-    // Function to preload the images
-    function preloader() {
+    // Function to preload the images [Lion]
+    function preloaderLion() {
         if (document.images) {
 
             // Instructions
@@ -4964,6 +5002,112 @@ $(document).ready(function(){
 
             tigerPlayer4TP.src = "assets/inactivePlayerTiger.png";
             tigerPlayer4TP.id = "tigerPlayer4TPID";
+
+            // Game
+            imagePlayerTiger.src = "assets/tigerCard.png";
+            imagePlayerTiger.id = "tigerCard";
+
+            imagePlayerLion.src = "assets/lionCard.png";
+            imagePlayerLion.id = "lionCard";
+
+            imageComputer.src = "assets/computerCard.png";
+            imageComputer.id = "computerCard";
+
+            // Reactions
+            emoji1.src = "assets/Valence1.png";
+            emoji1.id = "valence1";
+            emoji2.src = "assets/Valence2.png";
+            emoji2.id = "valence2";
+            emoji3.src = "assets/Valence3.png";
+            emoji3.id = "valence3";
+
+            // Participants' cards
+            pinkCard.src = "assets/pinkCard.png";
+            pinkCard.id = "pinkCardClickable";
+
+            grayCard.src = "assets/grayCard.png";
+            grayCard.id = "grayCardClickable";
+
+            purpleCard.src = "assets/purpleCard.png";
+            purpleCard.id = "purpleCardClickable";
+
+            orangeCard.src = "assets/orangeCard.png";
+            orangeCard.id = "orangeCardClickable";
+        }
+    }
+
+    // Function to preload the images [Tiger]
+    function preloaderTiger() {
+        if (document.images) {
+
+            // Instructions
+            gif.src = "assets/Loading.gif";
+
+            imageGroup.src = "assets/Tiger.png";
+            imageGroup.id = "imgGroupMembership";
+
+            dinosaurImage.src = "assets/computerCard.png";
+            dinosaurImage.id = "dinosaurRobotInstructions";
+            
+            gameTrialInstructions.src = "assets/gameInstructions.png";
+
+            cardSelectionInstructions.src = "assets/fourCardsInstruction.png"; 
+
+            emojiSelectionInstructions.src = "assets/valenceScale.png";
+
+            emojiDisplayInstructions.src = "assets/emotionalReactions.png";
+
+            // Ingroup players - Learning phase
+            tigerPlayer1.src = "assets/inactivePlayerTiger.png";
+            tigerPlayer1.id = "tigerPlayer1ID";
+            
+            tigerPlayer2.src = "assets/participantTiger2.png";
+            tigerPlayer2.id = "tigerPlayer2ID";
+
+            tigerPlayer3.src = "assets/inactivePlayerTiger.png";
+            tigerPlayer3.id = "tigerPlayer3ID";
+
+            tigerPlayer4.src = "assets/inactivePlayerTiger.png";
+            tigerPlayer4.id = "tigerPlayer4ID";
+
+            // Outgroup players - Learning phase
+            lionPlayer1.src = "assets/inactivePlayerLion.png";
+            lionPlayer1.id = "lionPlayer1ID";
+
+            lionPlayer2.src = "assets/inactivePlayerLion.png";
+            lionPlayer2.id = "lionPlayer2ID";
+
+            lionPlayer3.src = "assets/activePlayerLion3.png";
+            lionPlayer3.id = "lionPlayer3ID";
+
+            lionPlayer4.src = "assets/inactivePlayerLion.png";
+            lionPlayer4.id = "lionPlayer4ID";
+
+            // Ingroup players - Test phase
+            tigerPlayer1TP.src = "assets/inactivePlayerTiger.png";
+            tigerPlayer1TP.id = "tigerPlayer1TPID";
+            
+            tigerPlayer2TP.src = "assets/participantTiger2.png";
+            tigerPlayer2TP.id = "tigerPlayer2TPID";
+
+            tigerPlayer3TP.src = "assets/inactivePlayerTiger.png";
+            tigerPlayer3TP.id = "tigerPlayer3TPID";
+
+            tigerPlayer4TP.src = "assets/activePlayerTiger4.png";
+            tigerPlayer4TP.id = "tigerPlayer4TPID";
+
+            // Outgroup players - Test phase
+            lionPlayer1TP.src = "assets/activePlayerLion1.png";
+            lionPlayer1TP.id = "lionPlayer1TPID";
+
+            lionPlayer2TP.src = "assets/inactivePlayerLion.png";
+            lionPlayer2TP.id = "lionPlayer2TPID";
+
+            lionPlayer3TP.src = "assets/inactivePlayerLion.png";
+            lionPlayer3TP.id = "lionPlayer3TPID";
+
+            lionPlayer4TP.src = "assets/inactivePlayerLion.png";
+            lionPlayer4TP.id = "lionPlayer4TPID";
 
             // Game
             imagePlayerTiger.src = "assets/tigerCard.png";
