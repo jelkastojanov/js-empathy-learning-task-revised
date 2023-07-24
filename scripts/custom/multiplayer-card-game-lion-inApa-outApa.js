@@ -198,8 +198,8 @@ $(document).ready(function(){
     var entries;
 
     // Number of trials in the experiment
-    const numTrials = 1; // Learning phase [ATTENTION: CHANGE ACCORDINGLY]
-    const numTrialsTP = 2; // Test phase [ATTENTION: CHANGE ACCORDINGLY]
+    const numTrials = 70; // Learning phase [ATTENTION: CHANGE ACCORDINGLY]
+    const numTrialsTP = 21; // Test phase [ATTENTION: CHANGE ACCORDINGLY]
 
     // Timestamps when the empathy learning task started
 
@@ -390,8 +390,8 @@ $(document).ready(function(){
 
     // Learning phase
     var startingTrialNumber = 1; // Signal first trial
-    var startingTrialPlayer = "lionPlayer2ID";
-    // var startingTrialPlayer =  playerOrder[0]; // Signal active player on the first trial
+    // var startingTrialPlayer = "lionPlayer2ID";
+    var startingTrialPlayer =  playerOrder[0]; // Signal active player on the first trial
 
     // Needed to switch players
     var nextTrialNum;
@@ -628,7 +628,7 @@ $(document).ready(function(){
             case 2:
                 gameImageInstructionsSize = calculateAspectRatioFit(3368, 559, midDiv.clientWidth, midDiv.clientHeight);
                 var titleText = "<p class = 'textIntro'><span class = 'individualWords'>Instructions (2/7)<span></p>";;
-                var Info = "<p class = 'textInstructions'>In each round, the active player will select one of the four cards, which can have a <span class = 'individualWords'>value from 1 to 15</span>. Once the player has selected their card, the robot will select one of the remaining cards. If the player's card has a higher value than the robot's card, they <span class = 'individualWords'>win</span>. If the player's card has a lower value, they <span class = 'individualWords'>lose</span>. </p>";
+                var Info = "<p class = 'textInstructions'>In each round, the active player will select one of the four cards, which can have a <span class = 'individualWords'>hidden value from 1 to 15</span>. Once the player has selected their card, the robot will select one of the remaining cards. If the player's card has a higher value than the robot's card, they <span class = 'individualWords'>win</span>. If the player's card has a lower value, they <span class = 'individualWords'>lose</span>. </p>";
                 gameTrialInstructions.width = gameImageInstructionsSize.width;
                 gameTrialInstructions.height = gameImageInstructionsSize.height;
                 var Info2 = gameTrialInstructions;
@@ -680,7 +680,7 @@ $(document).ready(function(){
                 break;    
 
             case 8:
-                var titleText = "<p class = 'textIntro'><span class = 'individualWords'>If you don't understand this recap, please re-read the full instructions. The 'Next' button is temporarily blocked to make sure you read the information.<span></p>";
+                var titleText = "<p class = 'textIntro'><span class = 'individualWords'>If you don't understand this recap, please re-read the full instructions. The Next button is temporarily blocked to make sure you read the information.<span></p>";
                 var Info = "<p class = 'textInstructions'> You will play a card game against a robot. The goal is identify the rule governing the cards' values and win as often as possible to <span class = 'individualWords'>boost your individual Prolific bonus</span>. Other participants will also play the game, but <span class = 'individualWords'>their outcomes will have no effect on your Prolific bonus</span>.</p>";
                 var Info2 = "<p class = 'textInstructions'> After another player's outcome is known, you will be asked (a) to predict feelings of other members of the Lions and the Tigers about this outcome, and (b) to select an emoji reflecting how you feel about the same outcome. <span class = 'individualWords'>Your own emoji will be shown to one member of each group</span>. Similarly, <span class = 'individualWords'>you will see the emojis selected by two other players</span>.</p>";
                 break;   
