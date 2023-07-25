@@ -215,8 +215,8 @@ $(document).ready(function(){
     var entries;
 
     // Number of trials in the experiment
-    const numTrials = 10; // Learning phase [ATTENTION: CHANGE ACCORDINGLY]
-    const numTrialsTP = 10; // Test phase [ATTENTION: CHANGE ACCORDINGLY]
+    const numTrials = 70; // Learning phase [ATTENTION: CHANGE ACCORDINGLY]
+    const numTrialsTP = 21; // Test phase [ATTENTION: CHANGE ACCORDINGLY]
 
     // Timestamps when the empathy learning task started
 
