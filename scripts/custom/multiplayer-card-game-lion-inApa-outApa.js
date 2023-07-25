@@ -9,7 +9,7 @@ $(document).ready(function(){
 
     // 1. CONDITION: Variable currentExperimentalCondition should be changed to reflect the experimental condition in the title.
     // 2. GROUP: Variable currentGroupMembership should be changed to reflect the group membership of the participant. Similarly, variable notCurrentGroupMembership should be changed to reflect the other group.
-    // 3. GROUP: Change Gorilla link at the end.
+    // 3. GROUP: Change Gorilla link at the end to send participants to Gorilla post-task link associated with their group.
     // 4. GROUP: Variable imageGroup should be changed to reflect the group membership of the participant (in the preloader function). [DONE AUTOMATICALLY]
     // 5. GROUP: Group membership prompt and the button text need to be changed to reflect the group membership of the participant (in the groupMembership function). [DONE AUTOMATICALLY]
     // 6. GROUP: Variables tigerPlayer1-4 and lionPlayer1-4 should be changed to reflect the group membership of the participant (in the preloader function). [DONE AUTOMATICALLY]
@@ -28,8 +28,8 @@ $(document).ready(function(){
     var currentExperimentalCondition = "inApa_outApa";
 
     // Participant's group membership [ATTENTION: CHANGE ACCORDINGLY]
-    var currentGroupMembership = "Tiger";
-    var notCurrentGroupMembership = "Lion";
+    var currentGroupMembership = "Lion";
+    var notCurrentGroupMembership = "Tiger";
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -158,7 +158,7 @@ $(document).ready(function(){
     var emojiImagesSize;
 
     // Counterbalancing the position of players on the screen
-    var randTeamPosition;
+    var randTeamPosition = Math.random();
 
     // Counterbalancing the order of predictions in the task
     var randResponseOrderNum = Math.random(); // Generate a random number for counterbalancing purposes
@@ -215,8 +215,8 @@ $(document).ready(function(){
     var entries;
 
     // Number of trials in the experiment
-    const numTrials = 1; // Learning phase [ATTENTION: CHANGE ACCORDINGLY]
-    const numTrialsTP = 1; // Test phase [ATTENTION: CHANGE ACCORDINGLY]
+    const numTrials = 10; // Learning phase [ATTENTION: CHANGE ACCORDINGLY]
+    const numTrialsTP = 10; // Test phase [ATTENTION: CHANGE ACCORDINGLY]
 
     // Timestamps when the empathy learning task started
 
@@ -225,7 +225,7 @@ $(document).ready(function(){
     var localDate = new Date(localTime).toString();
 
     // UTC time
-    var utcDate = new Date().toUTCString();
+    var utcDate = new Date(localTime).toUTCString();
 
     // Timezone information
     var timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -761,7 +761,7 @@ $(document).ready(function(){
                 timerId = setTimeout(function(){
                     nextInstructionsEverShown = true;
                     $('#nextInstructions').show();
-                }, 12000); 
+                }, 15000); 
         
             } else {
                 $('#nextInstructions').show();
@@ -952,8 +952,8 @@ $(document).ready(function(){
 
         };
 
-        randTeamPosition = Math.random();
 
+        // Place players in line with the randomisation variable
         if (randTeamPosition < 0.50) {
             $('#sectionVeryTop').html(ingroupPlayersImages);
             $('#sectionVeryBottom').html(outgroupPlayersImages);
@@ -1257,7 +1257,7 @@ $(document).ready(function(){
         };
     };
 
-    // GAME OUTCOME (OTHER INGROUP AND OUTGROUP PARTICIPANTS)
+    // GAME OUTCOME 
     // TO SAVE: ACTIVE PLAYER, TRIAL NUMBER, TRIAL OUTCOME (LOSS/VICTORY), TRIAL OUTCOME RT, COMPUTER & PLAYER NUMBERS, BLOCK
     function gameOutcomeNotParticipant(activePlayer, trialNum) {
 
@@ -1371,7 +1371,7 @@ $(document).ready(function(){
         }, 2000);
     };
 
-    // OUTCOME REACTION CHOICE (NOT PARTICIPANT)
+    // OUTCOME REACTION CHOICE 
     // TO SAVE: REACTION TIME, RESPONSE
     function outcomeReactionChoiceNotParticipant(activePlayer, trialNum){
 
@@ -1533,7 +1533,7 @@ $(document).ready(function(){
         }); 
     };
 
-    // INGROUP REACTION PREDICTION (NOT PARTICIPANT)
+    // INGROUP REACTION PREDICTION
     // TO SAVE: REACTION TIME, RESPONSE
     function ingroupReactionPredictionNotParticipant(groupMembership, activePlayer, trialNum){
 
@@ -1707,7 +1707,7 @@ $(document).ready(function(){
         }); 
     };
 
-    // OUTGROUP REACTION PREDICTION (NOT PARTICIPANT)
+    // OUTGROUP REACTION PREDICTION
     // TO SAVE: REACTION TIME, RESPONSE
     function outgroupReactionPredictionNotParticipant(groupMembership, activePlayer, trialNum){
 
@@ -1786,7 +1786,7 @@ $(document).ready(function(){
 
                 } else {
 
-                     $('#emotionalReactionsPrompt').empty();
+                    $('#emotionalReactionsPrompt').empty();
                     $('#emotionalReactions').empty();
 
                     setTimeout(function() {
@@ -1882,8 +1882,6 @@ $(document).ready(function(){
             };
         }); 
     };
-
-    ////////// BOTH PARTICIPANT & NOT PARTICIPANT //////////
 
     // OUTCOME REACTION DISPLAY 
     // TO SAVE: WHOSE REACTIONS WERE DISPLAYED AND WHAT WERE THE REACTIONS
@@ -2323,7 +2321,7 @@ $(document).ready(function(){
 
     ////////// PARTICIPANT //////////
 
-    // GAME CHOICE, BUT WHEN IT'S PARTICIPANT'S TURN
+    // GAME CHOICE
     // TO SAVE: WHICH CARD WAS CHOSEN AND AFTER HOW LONG?
     function gameChoiceParticipant(activePlayer, trialNum) {
 
@@ -2449,7 +2447,7 @@ $(document).ready(function(){
         });
     };
 
-    // GAME OUTCOME, BUT WHEN IT'S PARTICIPANT'S TURN
+    // GAME OUTCOME
     // TO SAVE: ACTIVE PLAYER, TRIAL NUMBER, TRIAL OUTCOME (LOSS/VICTORY), TRIAL OUTCOME RT, COMPUTER & PLAYER NUMBERS, BLOCK, DISPLAY DELAY, DISPLAYED PLAYERS & THEIR REACTIONS
     function gameOutcomeParticipant(activePlayer, trialNum) {
 
@@ -2553,13 +2551,13 @@ $(document).ready(function(){
             dimTopScreen();
             removeCanvas();
 
-            // In the first seven trials, waiting period will last between 4 and 5 seconds
+            // In the first seven trials, waiting period will last between 4 and 6 seconds
             if (trialNum <= 7) {
-                waitTimeDisplay = randomIntFromInterval(4000, 5000);
+                waitTimeDisplay = randomIntFromInterval(4000, 6000);
 
-            // From the eight trial onwards, waiting period will last between 3 and 4 seconds
+            // From the eight trial onwards, waiting period will last between 3.5 and 5 seconds
             } else if (trialNum > 7) {
-                waitTimeDisplay = randomIntFromInterval(3000, 4000);
+                waitTimeDisplay = randomIntFromInterval(3500, 5000);
 
             };
 
@@ -2613,7 +2611,7 @@ $(document).ready(function(){
         var localDateStartTestBlock = new Date(localTimeStartTestBlock).toString();
 
         // UTC  time
-        var utcDateStartTestBlock = new Date().toUTCString();
+        var utcDateStartTestBlock = new Date(localTimeStartTestBlock).toUTCString();
         
         // Store the last two variables
         var localTimeStartTestBlockToStore = [].concat(... new Array(91).fill(localDateStartTestBlock));
@@ -3108,7 +3106,7 @@ $(document).ready(function(){
             var localDateTestBlockEnd = new Date(localTimeTestBlockEnd).toString();
 
             // UTC time
-            var utcDateTestBlockEnd = new Date().toUTCString();
+            var utcDateTestBlockEnd = new Date(localTimeTestBlockEnd).toUTCString();
 
             // Duration of the test block
             endTestBlock = Date.now();
@@ -3257,7 +3255,7 @@ $(document).ready(function(){
         };
     };
 
-    // GAME OUTCOME (OTHER INGROUP AND OUTGROUP PARTICIPANTS)
+    // GAME OUTCOME 
     // TO SAVE: ACTIVE PLAYER, TRIAL NUMBER, TRIAL OUTCOME (LOSS/VICTORY), TRIAL OUTCOME RT, COMPUTER & PLAYER NUMBERS, BLOCK
     function gameOutcomeNotParticipantTP(activePlayer, trialNumTP) {
 
@@ -3364,7 +3362,7 @@ $(document).ready(function(){
         }, 2000);
     };
 
-    // OUTCOME REACTION CHOICE (NOT PARTICIPANT)
+    // OUTCOME REACTION CHOICE 
     // TO SAVE: REACTION TIME, RESPONSE
     function outcomeReactionChoiceNotParticipantPublicTP(activePlayer, trialNumTP){
 
@@ -3550,7 +3548,7 @@ $(document).ready(function(){
 
     ////////// PARTICIPANT //////////
 
-    // GAME CHOICE, BUT WHEN IT'S PARTICIPANT'S TURN
+    // GAME CHOICE
     // TO SAVE: WHICH CARD WAS CHOSEN AND AFTER HOW LONG?
     function gameChoiceParticipantTP(activePlayer, trialNumTP) {
 
@@ -3676,7 +3674,7 @@ $(document).ready(function(){
         });
     };
 
-    // GAME OUTCOME, BUT WHEN IT'S PARTICIPANT'S TURN
+    // GAME OUTCOME
     // TO SAVE: ACTIVE PLAYER, TRIAL NUMBER, TRIAL OUTCOME (LOSS/VICTORY), TRIAL OUTCOME RT, COMPUTER & PLAYER NUMBERS, BLOCK
     function gameOutcomeParticipantTP(activePlayer, trialNumTP) {
 
@@ -3840,7 +3838,7 @@ $(document).ready(function(){
         var localDateEnd = new Date(localTimeEnd).toString();
 
         // UTC time
-        var utcDateEnd = new Date().toUTCString();
+        var utcDateEnd = new Date(localTimeEnd).toUTCString();
 
         // Duration of the task
         endTask = Date.now();
