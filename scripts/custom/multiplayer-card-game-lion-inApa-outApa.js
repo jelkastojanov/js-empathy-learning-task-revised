@@ -3868,8 +3868,7 @@ $(document).ready(function(){
             setTimeout(function(){ 
 
                 // Redirect participants to Gorilla and save Prolific ID as a URL parameter
-                window.location.replace("https://research.sc/participant/login/dynamic/3633C662-96A8-4AF0-BC4E-CD876A568445?external_id=" + capturedProlificID + "&external_session_id=" + 3 + "");
-
+                window.location.replace("https://research.sc/participant/login/dynamic/2769D052-9206-4E11-8803-F8208F2B01BE?external_id=" + capturedProlificID + "&external_session_id=" + 3 + "");
             }, 500);
             
         }, 4000);
